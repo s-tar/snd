@@ -1,0 +1,57 @@
+@import "button/button__text.styl"
+@import "button/button__processing.styl"
+
+.button
+  display: inline-block
+  position: relative
+  outline: none
+  padding: 12px 30px
+  margin: .3125rem 10px
+  margin-right: 0
+  font-size: .75rem
+  font-weight: 400
+  line-height: 1.428571
+  text-decoration: none
+  text-transform: uppercase
+  letter-spacing: 0
+  cursor: pointer
+  border: 0
+  border-radius: .2rem
+  transition: 0.3s ease-out
+  color: #3c4858
+  background-color: #ffffff
+  border-color: #ffffff
+  &:first-child
+    margin-left: 0
+  &:hover
+    box-shadow: 0 8px 11px -3px rgba(0,0,0,.2)
+
+.button--success
+  color: #fff
+  background-color: #99a036
+  border-color: #707635
+  &:active
+    background-color: #767d37
+    border-color: #6e7430
+
+.button--info
+  color: #fff
+  background-color: #00bcd4
+  border-color: #00bcd4
+  &:hover
+    background-color: #00aec5
+    border-color: #004b55;
+  &:active
+    background-color: #008fa1
+    border-color: #008394
+
+.button--danger
+  color: #fff
+  background-color: #f33527
+  border-color: #e11b0c
+  &:hover
+    background-color: #f33527;
+    border-color: #e11b0c;
+  &:active
+    background-color: #f33527
+    border-color: #f33527

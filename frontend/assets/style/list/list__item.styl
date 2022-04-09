@@ -1,0 +1,40 @@
+.list__item
+  list-style: none
+  display: inline-block
+
+.list__item--card
+  cursor: pointer
+  height: $list-item-height
+  display: flex
+  justify-content: space-between
+  align-items: center
+  margin: 15px 0
+  padding: 0
+  position: relative
+  border-radius: .2rem
+  transition: 0.3s ease-out
+  background: #263028
+  border: 1px solid #38402b
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,.2)
+  transform: scale(1)
+  &:hover
+    opacity: 1
+    box-shadow: 0 8px 11px -3px rgba(0,0,0,.2)
+
+.list__item--table-row
+  display: table-row
+
+.list__item .list__item-actions
+  opacity: 0
+
+.list__item:hover .list__item-actions
+  opacity: 1
+
+.list__item--inactive
+  opacity: 0.3
+  &:hover
+    opacity: 0.6
+
+.list__item--hidden
+  display: none
+

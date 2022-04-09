@@ -1,0 +1,31 @@
+.form__field-checkbox
+  width: 24px
+  height: 24px
+  border-radius: 3px
+  border: 1px solid #ccc
+  cursor: pointer
+  display: inline-flex
+  align-items: flex-start
+  justify-content: center
+  vertical-align: center
+
+.form__field-checkbox:before
+  content: ''
+  border-right: 5px solid transparent
+  border-bottom: 5px solid transparent
+  transform: rotate(45deg)
+  width: 50%
+  height: 75%
+  user-select: none
+
+
+.form__field-checkbox--checked:before
+  border-color: #00bcd4
+
+.form__field-checkbox--readonly:before
+  border-color: #ccc
+
+.form__field-checkbox--has-error
+  border-color: #f44336
+  &:before
+    border-color: #f44336

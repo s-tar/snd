@@ -1,0 +1,8 @@
+$ranks-count = 20
+
+for num in (1..$ranks-count)
+  .rank-gf{num}
+    background: url('/ranks.png')
+    background-repeat: no-repeat
+    background-position-x: (num * 100 / ($ranks-count - 1))%
+    background-size: $ranks-count * 100% 100%
