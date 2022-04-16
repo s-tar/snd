@@ -11,7 +11,7 @@ class MongoDatabase:
 
     def init(self, host, port, dbname, user=None, password=None):
         if user:
-            uri = f"mongodb://{user}:{password}@{host}:{port}"
+            uri = f"mongodb://{user}:{password}@{host}:{port}/{dbname}"
             self.client = motor_asyncio.AsyncIOMotorClient(uri)
         else:
             self.client = motor_asyncio.AsyncIOMotorClient(host, port)

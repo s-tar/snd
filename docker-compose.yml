@@ -34,14 +34,6 @@ services:
     working_dir: /opt/frontend
     command: sh -c "yarn install && yarn build && yarn start"
 
-  database:
-    container_name: database
-    restart: always
-    image: mongo:latest
-    volumes:
-      - db-data:/data/db
-    ports:
-      - 27017:27017
   nginx:
     image: nginx:1.15-alpine
     container_name: nginx

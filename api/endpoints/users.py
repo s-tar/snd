@@ -92,7 +92,7 @@ async def verify(
 
         user.verification = None
         user.verified = True
-        await user.commit()
+        await database.save(user)
 
     access_token = get_access_token(user.id, user.password)
     return Token(

@@ -33,6 +33,8 @@ app.add_middleware(
 database.init(
     host=settings.database_host,
     port=settings.database_port,
+    user=settings.database_username,
+    password=settings.database_password,
     dbname=settings.database_name,
 )
 email.init(
