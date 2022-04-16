@@ -9,8 +9,12 @@ class MongoDatabase:
         self.client = None
         self.engine = None
 
-    def init(self, host, port, dbname):
-        self.client = motor_asyncio.AsyncIOMotorClient(host, port)
+    def init(self, host, port, dbname, user=None, password=None):
+        if user:
+            uri = f"mongodb://{user}:{password}@{host}:{port}"
+            self.client = motor_asyncio.AsyncIOMotorClient(uri)
+        else:
+            self.client = motor_asyncio.AsyncIOMotorClient(host, port)
         self.client.get_io_loop = asyncio.get_running_loop
         self.engine = AIOEngine(motor_client=self.client, database=dbname)
 
