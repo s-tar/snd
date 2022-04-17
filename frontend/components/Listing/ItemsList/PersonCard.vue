@@ -10,8 +10,8 @@
     >
       <div class="person-card__header">
         <div class="person-card__photo">
-          <img :src="getPhoto(item.person)" class="person-card__photo-image" alt=""/>
-          <i v-if="!item.person.photo" :class="item.icon"></i>
+          <img v-if="item.person.photo" :src="getPhoto(item.person)" class="person-card__photo-image" alt=""/>
+          <i v-else :class="item.icon"></i>
         </div>
         <div class="person-card__short-info" @click="item.click">
           <div class="person-card__container person-card__title">
