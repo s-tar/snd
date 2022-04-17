@@ -62,7 +62,7 @@ async def add_many_person_endpoint(
     }
     squads = {
         squad.id: squad
-        async for squad in database.find(Squad, Squad.id.in_(squad_ids))
+        for squad in await database.find(Squad, Squad.id.in_(list(squad_ids)))
     }
 
     persons = []
@@ -72,7 +72,7 @@ async def add_many_person_endpoint(
             raise FieldValidationError("military.squad", "Squad not found")
 
         person = Person(
-            **data.dict(exclude_unset=True),
+            **person_data.dict(exclude_unset=True),
             code=get_code(person_data)
         )
         persons.append(person)

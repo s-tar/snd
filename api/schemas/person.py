@@ -54,7 +54,7 @@ class Person(BaseModel):
     identification_number: str = None
     insurance_number: str = None
 
-    phones: List[int] = []
+    phones: Optional[List[int]]
     email: str = None
 
     social: Social = None
@@ -65,7 +65,7 @@ class Person(BaseModel):
 
     extra: str = None
 
-    tags: List[str] = []
+    tags: Optional[List[str]]
 
 
 class SavePersonRequest(Person):

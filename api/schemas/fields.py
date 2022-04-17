@@ -1,3 +1,4 @@
+import datetime
 import re
 
 from bson import ObjectId
@@ -48,3 +49,16 @@ class Code(str):
             )
 
         return cls(value)
+
+
+class Date(datetime.datetime):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        return datetime.datetime.combine(
+            v.today(),
+            datetime.datetime.min.time()
+        )

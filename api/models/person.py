@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from typing import Optional
 
 from odmantic import EmbeddedModel
@@ -11,6 +11,7 @@ from constants.countries import CountryCodes
 from constants.person import PersonStatus
 from constants.person import PersonType
 from constants.person import Relationship
+from schemas.fields import Date
 
 
 class Social(EmbeddedModel):
@@ -21,7 +22,7 @@ class Social(EmbeddedModel):
 
 class Doc(EmbeddedModel):
     number: str
-    date: Optional[datetime]
+    date: Optional[Date]
     authority: Optional[str]
 
 
@@ -37,7 +38,7 @@ class Relative(EmbeddedModel):
     name: str
     relationship: Relationship
     photo: Optional[str]
-    birthday: Optional[datetime]
+    birthday: Optional[Date]
     phones: Optional[List[int]]
     social: Optional[Social]
 
@@ -53,7 +54,7 @@ class Person(Model):
     country: CountryCodes
 
     photo: Optional[str]
-    birthday: Optional[datetime]
+    birthday: Optional[Date]
     city_of_birth: Optional[str]
     address: Optional[str]
 
@@ -76,5 +77,5 @@ class Person(Model):
 
     extra: Optional[str]
 
-    created_at: datetime = Field(default_factory=datetime.now)
-    deleted_at: Optional[datetime]
+    created_at: datetime.datetime = Field(default_factory=datetime.datetime.now)
+    deleted_at: Optional[datetime.datetime]
