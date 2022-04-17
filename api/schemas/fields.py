@@ -58,7 +58,4 @@ class Date(datetime.datetime):
 
     @classmethod
     def validate(cls, v):
-        return datetime.datetime.combine(
-            v.today(),
-            datetime.datetime.min.time()
-        )
+        return datetime.datetime(v.year, v.month, v.day)
