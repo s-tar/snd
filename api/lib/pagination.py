@@ -12,11 +12,18 @@ async def paginate(
     query,
     page: int = 1,
     per_page: int = 10,
+    sort=None,
 ):
     per_page = min(MAX_PER_PAGE, per_page)
     total = await database.count(entity, query)
     skip_count = per_page * (page - 1 if page > 1 else 0)
-    items = await database.find(entity, query, limit=per_page, skip=skip_count)
+    items = await database.find(
+        entity,
+        query,
+        limit=per_page,
+        skip=skip_count,
+        sort=sort,
+    )
 
     return Page(
         items=items,

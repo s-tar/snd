@@ -180,7 +180,11 @@ async def all_persons_endpoint(
         query = {"$text": {"$search": search}}
 
     persons_page = await paginate(
-        entity=Person, query=query, page=page, per_page=per_page
+        entity=Person,
+        query=query,
+        page=page,
+        per_page=per_page,
+        sort=Person.id.desc(),
     )
 
     return PersonListResponse(
