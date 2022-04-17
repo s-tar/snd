@@ -19,7 +19,7 @@
               <Flag :code="item.person.country" />
             </div>
             <div class="person-card__name">{{ item.title }}</div>
-            <div class="">{{ getDate(item.person.birthday) }}</div>
+            <div v-if="item.person.birthday">{{ getDate(item.person.birthday) }}</div>
           </div>
           <div v-if="item.person.military" class="person-card__container">
             <div

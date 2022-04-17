@@ -5,7 +5,7 @@
         <div class="header__title">
           <a class="header__logo" href="/">Seek<small>&</small>Destroy</a>
         </div>
-        <Profile />
+        <div></div>
       </div>
     </header>
     <div class="container container--centered">
