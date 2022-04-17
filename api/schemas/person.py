@@ -67,6 +67,8 @@ class Person(BaseModel):
 
     tags: Optional[List[str]]
 
+    sources: Optional[List[str]]
+
 
 class SavePersonRequest(Person):
     id: MongoId = None

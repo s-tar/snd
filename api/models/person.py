@@ -77,5 +77,7 @@ class Person(Model):
 
     extra: Optional[str]
 
+    sources: Optional[List[str]]
+
     created_at: datetime.datetime = Field(default_factory=datetime.datetime.now)
     deleted_at: Optional[datetime.datetime]
