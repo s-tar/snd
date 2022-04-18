@@ -17,8 +17,8 @@ class PersonStatus(IntEnum):
 class Relationship(IntEnum):
     SON = 1
     DAUGHTER = 2
-    WIFE: 3
-    HUSBAND: 4
+    WIFE = 3
+    HUSBAND = 4
 
     MOTHER = 5
     FATHER = 6
@@ -27,6 +27,7 @@ class Relationship(IntEnum):
 
     GRANDMOTHER = 9
     GRANDFATHER = 10
-    COUSIN = 11
-    AUNT = 12
-    UNCLE = 13
+    COUSIN_BROTHER = 11
+    COUSIN_SISTER = 12
+    AUNT = 13
+    UNCLE = 14
