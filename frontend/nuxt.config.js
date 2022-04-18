@@ -8,7 +8,10 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'description', name: 'description', content: '' },
+      { property: "og:title", content: "Seel & Destroy" },
+      { property: "og:description", content: "Список военных преступников участвующих в войне в Украине" },
+      { property: "og:image", content:"/favicon.png"}
     ],
     script: [
       { defer: true, src: 'https://use.fontawesome.com/releases/v6.1.1/js/all.js', integrity: 'sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp', crossorigin: 'anonymous' },
