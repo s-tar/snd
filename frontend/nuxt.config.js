@@ -37,6 +37,7 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     { src: '~/plugins/vue-flagpack.js', mode: 'client' },
+    { src: '~/plugins/v-viewer', mode: 'client' },
     '~/plugins/axios',
   ],
 

@@ -10,7 +10,7 @@
     >
       <div class="person-card__header">
         <div class="person-card__photo">
-          <img v-if="item.person.photo" :src="getPhoto(item.person)" class="person-card__photo-image" alt=""/>
+          <img v-if="item.person.photo" :src="getPhoto(item.person)" @click="onPhotoClick(item.person)" class="person-card__photo-image" alt=""/>
           <i v-else :class="item.icon"></i>
         </div>
         <div class="person-card__short-info" @click="item.click">
@@ -156,8 +156,13 @@ export default {
     getDeleteUrl: { type: Function, required: true },
   },
   methods: {
-    getPhoto(person) {
-      return `/public/person/${person.id}/${person.photo}`
+    getPhoto(person, fullScale = false) {
+      let photoName = person.photo
+      if (fullScale) {
+        const [name, hex,, ext] = photoName.split('.')
+        photoName = `${name}.${hex}.${ext}`
+      }
+      return `/public/person/${person.id}/${photoName}`
     },
     getRank(code) {
       return RANKS[code] || ''
@@ -182,6 +187,12 @@ export default {
     shortDescription(description) {
       const descriptionLines = description ? description.split('\n') : []
       return descriptionLines[0] + (descriptionLines.length > 1 ? '...' : '')
+    },
+    onPhotoClick(person) {
+      this.$viewerApi({
+        options: { toolbar: false, title: false, movable: false },
+        images: [this.getPhoto(person, true)],
+      })
     },
   },
 }
