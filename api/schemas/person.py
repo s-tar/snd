@@ -9,6 +9,7 @@ from typing import Optional
 from constants.countries import CountryCodes
 from constants.person import PersonStatus
 from constants.person import PersonType
+from constants.person import Relationship
 from constants.ranks import Rank
 from schemas.base import BaseModel
 from schemas.fields import MongoId
@@ -37,6 +38,15 @@ class Military(BaseModel):
     squad: MongoId = None
 
 
+class Relative(BaseModel):
+    name: str
+    relationship: Relationship
+    photo: Optional[str]
+    birthday: Optional[datetime.date]
+    phones: Optional[List[int]]
+    social: Optional[Social]
+
+
 class Person(BaseModel):
     first_name: NotEmptyString
     last_name: NotEmptyString
@@ -60,6 +70,8 @@ class Person(BaseModel):
     social: Social = None
 
     military: Military = None
+
+    relatives: Optional[List[Relative]]
 
     status: PersonStatus = PersonStatus.ALIVE
 
