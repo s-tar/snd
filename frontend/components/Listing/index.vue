@@ -92,7 +92,7 @@ export default {
   },
   computed: {
     visiblePages() {
-      return this.screenWidth > 500 ? 5 : 3
+      return this.screenWidth > 500 ? 5 : 2
     },
     itemsListComponent() {
       return Card
