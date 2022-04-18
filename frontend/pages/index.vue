@@ -30,7 +30,7 @@ export default {
         return {
           id: person.code,
           icon: 'fa-solid fa-user',
-          title: `${person.last_name} ${person.first_name}  ${person.middle_name} `,
+          title: `${person.last_name} ${person.first_name}  ${person.middle_name || ''}`,
           person,
           squad: person.military ? this.squads[person.military.squad] : null,
           description: person.birthday,

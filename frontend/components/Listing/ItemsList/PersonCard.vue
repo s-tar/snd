@@ -64,7 +64,7 @@
                   <div class="table__cell person-card__frame-field-name">Военный билет:</div>
                   <div class="table__cell person-card__frame-field-value">
                     <span v-if="item.person.military.ticket.number">{{ item.person.military.ticket.number }}<br /></span>
-                    <span v-if="item.person.military.ticket.date">в\ч {{ getDate(item.person.military.ticket.date) }}<br /></span>
+                    <span v-if="item.person.military.ticket.date">{{ getDate(item.person.military.ticket.date) }}<br /></span>
                     <span v-if="item.person.military.ticket.authority">{{ item.person.military.ticket.authority }}<br /></span>
                   </div>
                 </div>
