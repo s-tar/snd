@@ -1,6 +1,15 @@
 .person-card__title
+  position: relative
   margin: 5px
   font-weight: 400
   color: #8d931f
   align-items: center
   font-size: 1.3em
+  cursor: pointer
+
+@media only screen and (max-width: $tablet-max-width)
+  .person-card__title
+    margin: 0
+    padding: 0 10px
+    align-items: flex-start
+    flex-direction: column

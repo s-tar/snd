@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <header class="header">
-      <div class="container container--separated container--centered">
+      <div class="header_content container container--separated container--centered">
         <div class="header__title">
           <a class="header__logo" href="/">Seek<small>&</small>Destroy</a>
         </div>

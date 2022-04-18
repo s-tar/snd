@@ -9,26 +9,30 @@
       }"
     >
       <div class="person-card__header">
-        <div>
-          <div class="person-card__photo">
-            <img v-if="item.person.photo" :src="getPhoto(item.person)" @click="onPhotoClick(item.person)" class="person-card__photo-image" alt=""/>
-            <i v-else :class="item.icon"></i>
+        <div class="person-card__photo">
+          <img v-if="item.person.photo" :src="getPhoto(item.person)" @click="onPhotoClick(item.person)" class="person-card__photo-image" alt=""/>
+          <i v-else :class="item.icon"></i>
+        </div>
+        <div class="person-card__container person-card__title" @click="item.click">
+          <div v-if="item.person.country" class="person-card__badge person-card__country-flag-badge">
+            <Flag :code="item.person.country" />
           </div>
+          <div class="person-card__name">
+            <span v-if="item.person.last_name">{{ item.person.last_name }}</span>
+            <span v-if="item.person.first_name">{{ item.person.first_name }}</span>
+            <span v-if="item.person.middle_name">{{ item.person.middle_name }}</span>
+          </div>
+          <div class="person-card__birthday" v-if="item.person.birthday">{{ getDate(item.person.birthday) }}р.</div>
         </div>
         <div class="person-card__short-info" @click="item.click">
-          <div class="person-card__container person-card__title">
-            <div v-if="item.person.country" class="person-card__badge person-card__country-flag-badge">
-              <Flag :code="item.person.country" />
-            </div>
-            <div class="person-card__name">{{ item.title }}</div>
-            <div v-if="item.person.birthday">{{ getDate(item.person.birthday) }}</div>
-          </div>
           <div v-if="item.person.military" class="person-card__container">
-            <div
-              v-if="item.person.military.rank"
-              :class="'person-card__badge person-card__rank-badge ' + 'rank-' + item.person.military.rank.toLowerCase()"
-              :title="getRank(item.person.military.rank)"
-            ></div>
+            <div>
+              <div
+                v-if="item.person.military.rank"
+                :class="'person-card__badge person-card__rank-badge ' + 'rank-' + item.person.military.rank.toLowerCase()"
+                :title="getRank(item.person.military.rank)"
+              ></div>
+            </div>
             <div>
               <div>{{ item.person.military.post }} ({{ getRank(item.person.military.rank) }})</div>
               <div v-if="item.squad">{{ item.squad.name }}</div>
