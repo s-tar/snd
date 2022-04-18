@@ -49,10 +49,16 @@ async def save_image(file, name, upload_folder, hex=None, size=None, fill=FILL.C
         else:
             ratio = max(ratio_x, ratio_y)
 
-        image = image.resize(
-            (round(image.size[0] * ratio), round(image.size[1] * ratio)),
-            resample=Image.LANCZOS,
-        )
+        width = round(image.size[0] * ratio)
+        height = round(image.size[1] * ratio)
+        image = image.resize((width, height), resample=Image.LANCZOS)
+        if fill == FILL.COVER:
+            image = image.crop((
+                (width - size[0]) / 2,
+                (height - size[1]) / 2,
+                (width - size[0]) / 2 + size[0],
+                (height - size[1]) / 2 + size[1],
+            ))
 
     filename = [name]
     if hex:
