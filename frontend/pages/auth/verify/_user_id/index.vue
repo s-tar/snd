@@ -83,7 +83,7 @@ export default {
       if (index < this.numbersCount - 1) {
         setTimeout(() => {
           this.$refs.number[index + 1].$refs.field.focus()
-        }, 10)
+        }, 100)
       }
     },
     isNumber(e) {

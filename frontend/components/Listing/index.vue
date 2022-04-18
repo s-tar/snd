@@ -43,7 +43,7 @@
       Ничего не найдено.
     </div>
     <div class="container container--centred">
-      <Pagination :page="page" :max-page="maxPage" @change="pageChange" />
+      <Pagination :page="page" :max-page="maxPage" :visible-pages="visiblePages" @change="pageChange" />
     </div>
   </div>
 </template>
@@ -78,10 +78,22 @@ export default {
       loading: true,
       deleted: {},
       searchPhrase: '',
+      screenWidth: 0,
     }
   },
-
+  beforeMount() {
+    window.addEventListener('resize', this.onResize)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onResize)
+  },
+  created() {
+    this.screenWidth = this.getScreenWidth()
+  },
   computed: {
+    visiblePages() {
+      return this.screenWidth > 500 ? 5 : 3
+    },
     itemsListComponent() {
       return Card
     },
@@ -117,7 +129,12 @@ export default {
     async pageChange() {},
     async onSearch() {},
     getDeleteUrl(id) { throw new Error('Unimplemented') },
-
+    getScreenWidth() {
+      return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+    },
+    onResize() {
+      this.screenWidth = this.getScreenWidth()
+    },
     onFilterChange(e, action) {
       const { name, value } = e.target
       const query = { ...this.$route.query }

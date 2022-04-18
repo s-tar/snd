@@ -45,16 +45,17 @@ export default {
   props: {
     page: { type: Number, required: true },
     maxPage: { type: Number, required: true },
+    visiblePages: { type: Number, default: VISIBLE_PAGES },
   },
   computed: {
     _page() {
       return Math.max(1, Math.min(this.maxPage, this.page))
     },
     from() {
-      return Math.max(0, Math.min(this.maxPage - VISIBLE_PAGES - 2, this._page - Math.ceil(VISIBLE_PAGES / 2)))
+      return Math.max(0, Math.min(this.maxPage - this.visiblePages - 2, this._page - Math.ceil(this.visiblePages / 2)))
     },
     to() {
-      return Math.min(this.maxPage, Math.max(VISIBLE_PAGES + 2, this._page + Math.floor(VISIBLE_PAGES / 2)))
+      return Math.min(this.maxPage, Math.max(this.visiblePages + 2, this._page + Math.floor(this.visiblePages / 2)))
     },
   },
   methods: {
