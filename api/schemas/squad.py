@@ -1,7 +1,11 @@
 from typing import Dict
 
+from typing import List
+
 from schemas.base import BaseModel
+from schemas.fields import MongoId
 from schemas.fields import NotEmptyString
+from schemas.pagination import Pagination
 from schemas.response import ResponseModel
 
 
@@ -20,8 +24,8 @@ class SquadIdResponse(ResponseModel):
 
 
 class SquadResponse(Squad):
-    pass
+    id: MongoId
 
 
-class SquadByIdListResponse(ResponseModel):
-    squads: Dict[str, SquadResponse]
+class SquadByIdListResponse(ResponseModel, Pagination):
+    items: List[SquadResponse]

@@ -56,7 +56,7 @@ class Person(Model):
     photo: Optional[str]
     birthday: Optional[Date]
     city_of_birth: Optional[str]
-    address: Optional[str]
+    addresses: Optional[List[str]]
 
     passport: Optional[Doc]
     identification_number: Optional[str]

@@ -45,7 +45,7 @@ class Person(BaseModel):
     type: PersonType = PersonType.MILITARY
 
     country: CountryCodes = None
-    address: str = None
+    addresses: Optional[List[str]] = None
     photo: str = None
     birthday: datetime.date = None
     city_of_birth: str = None
@@ -108,6 +108,5 @@ class PersonIdResponse(ResponseModel):
     id: str
 
 
-class PersonIdsResponse(ResponseModel):
-    ids: List[str]
+class AddMultipleResponse(ResponseModel):
     fails: Dict[int, str]

@@ -20,13 +20,7 @@ export default {
       return PersonCard
     },
     mainButtons() {
-      return [
-        // {
-        //   name: 'Add Person',
-        //   url: '/person/add',
-        //   class: 'button button--success',
-        // },
-      ]
+      return []
     },
     maxPage() {
       return this.persons.max_page
@@ -83,7 +77,9 @@ export default {
           paramsSerializer: params => require('qs').stringify(params, { arrayFormat: 'repeat' }),
         },
       )
-      return res.squads
+      const squads = {}
+      res.items.forEach((squad) => { squads[squad.id] = squad })
+      return squads
     },
     async loadPersons() {
       const { page, s } = this.$route.query

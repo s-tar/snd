@@ -21,7 +21,7 @@ from models.squad import Squad
 from models.user import User
 from schemas.person import AddManyPersonRequest
 from schemas.person import PersonIdResponse
-from schemas.person import PersonIdsResponse
+from schemas.person import AddMultipleResponse
 from schemas.person import PersonListResponse
 from schemas.person import PersonResponse
 from schemas.person import SavePersonRequest
@@ -44,7 +44,7 @@ def get_code(person):
 @router.post(
     "/add_many",
     status_code=status.HTTP_200_OK,
-    response_model=PersonIdsResponse,
+    response_model=AddMultipleResponse,
     responses={
         status.HTTP_403_FORBIDDEN: {"description": "Operation forbidden"},
     },
@@ -54,7 +54,6 @@ async def add_many_person_endpoint(
     data: AddManyPersonRequest,
     editor: User = Depends(get_editor),
 ):
-    ids = []
     squad_ids = {
         ObjectId(person.military.squad)
         for person in data.persons
@@ -94,8 +93,7 @@ async def add_many_person_endpoint(
     await database.save_all(
         person for person in persons if person.code not in existed_codes
     )
-
-    return PersonIdsResponse(ids=ids, fails=fails)
+    return AddMultipleResponse(fails=fails)
 
 
 @router.post(

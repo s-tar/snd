@@ -6,8 +6,10 @@ from starlette import status
 from typing import List
 
 from base.database import database
+from lib.pagination import paginate
 from models.squad import Squad
 from models.user import User
+from schemas.response import Status
 from schemas.squad import AddSquadRequest
 from schemas.squad import SquadByIdListResponse
 from schemas.squad import SquadIdResponse
@@ -40,19 +42,35 @@ async def add_squad_endpoint(
     "/get",
     status_code=status.HTTP_200_OK,
     response_model=SquadByIdListResponse,
-    summary="Get squads by ids"
+    summary="Get squads"
 )
-async def all_squads_by_ids_endpoint(ids: List[str] = Query(None)):
-    squad_ids = [
-        ObjectId(squad_id)
-        for squad_id in ids
-        if ObjectId.is_valid(squad_id)
-    ]
-    squads = {
-        str(squad.id): SquadResponse(**squad.dict())
-        for squad in await database.find(Squad, Squad.id.in_(squad_ids))
-    }
+async def get_squads_by_ids_endpoint(
+    page: int = 1,
+    per_page: int = 20,
+    ids: List[str] = Query(None),
+):
+    query = {}
+    if ids:
+        query = Squad.id.in_([
+            ObjectId(squad_id)
+            for squad_id in ids
+            if ObjectId.is_valid(squad_id)
+        ])
+
+    squad_page = await paginate(
+        entity=Squad,
+        query=query,
+        page=page,
+        per_page=per_page,
+    )
 
     return SquadByIdListResponse(
-        squads=squads,
+        status=Status.OK,
+        page=squad_page.page,
+        per_page=squad_page.per_page,
+        max_page=squad_page.max_page,
+        items=[
+            SquadResponse(**item.dict())
+            for item in squad_page.items
+        ],
     )

@@ -101,9 +101,13 @@
                     +{{ phone }}
                   </div>
                 </div>
-                <div v-if="item.person.address" class="table__row">
-                  <div class="table__cell person-card__frame-field-name">Адрес:</div>
-                  <div class="table__cell person-card__frame-field-value">{{ item.person.address }}</div>
+                <div v-if="item.person.addresses" class="table__row">
+                  <div class="table__cell person-card__frame-field-name">Адреса:</div>
+                  <div class="table__cell person-card__frame-field-value">
+                      <span v-for="(address, i) in item.person.addresses" :key="i">
+                        <i class="fa-solid fa-location-dot"></i> {{ address }}<br />
+                      </span>
+                  </div>
                 </div>
               </div>
               <div v-if="item.person.social" class="table">
