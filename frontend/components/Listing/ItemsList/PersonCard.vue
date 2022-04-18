@@ -9,9 +9,11 @@
       }"
     >
       <div class="person-card__header">
-        <div class="person-card__photo">
-          <img v-if="item.person.photo" :src="getPhoto(item.person)" @click="onPhotoClick(item.person)" class="person-card__photo-image" alt=""/>
-          <i v-else :class="item.icon"></i>
+        <div>
+          <div class="person-card__photo">
+            <img v-if="item.person.photo" :src="getPhoto(item.person)" @click="onPhotoClick(item.person)" class="person-card__photo-image" alt=""/>
+            <i v-else :class="item.icon"></i>
+          </div>
         </div>
         <div class="person-card__short-info" @click="item.click">
           <div class="person-card__container person-card__title">
