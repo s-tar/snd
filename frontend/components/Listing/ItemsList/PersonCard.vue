@@ -45,30 +45,30 @@
           <div v-if="item.person.military" class="person-card__frame">
             <div class="person-card__frame-title">Служба</div>
             <div class="person-card__frame-body">
-              <div class="table">
-                <div v-if="item.person.military.number" class="table__row">
-                  <div class="table__cell person-card__frame-field-name">Личный номер:</div>
-                  <div class="table__cell person-card__frame-field-value">{{ item.person.military.number }}</div>
+              <div class="person-card__frame-fields">
+                <div v-if="item.person.military.number" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name">Личный номер:</div>
+                  <div class="person-card__frame-field-value">{{ item.person.military.number }}</div>
                 </div>
-                <div v-if="item.person.military.rank" class="table__row">
-                  <div class="table__cell person-card__frame-field-name">Звание:</div>
-                  <div class="table__cell person-card__frame-field-value">{{ getRank(item.person.military.rank) }}</div>
+                <div v-if="item.person.military.rank" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name">Звание:</div>
+                  <div class="person-card__frame-field-value">{{ getRank(item.person.military.rank) }}</div>
                 </div>
-                <div v-if="item.person.military.post" class="table__row">
-                  <div class="table__cell person-card__frame-field-name">Должность:</div>
-                  <div class="table__cell person-card__frame-field-value">{{ item.person.military.post }}</div>
+                <div v-if="item.person.military.post" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name">Должность:</div>
+                  <div class="person-card__frame-field-value">{{ item.person.military.post }}</div>
                 </div>
-                <div v-if="item.squad" class="table__row">
-                  <div class="table__cell person-card__frame-field-name">Подразделение:</div>
-                  <div class="table__cell person-card__frame-field-value">
+                <div v-if="item.squad" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name">Подразделение:</div>
+                  <div class="person-card__frame-field-value">
                     <span v-if="item.squad.name">{{ item.squad.name }}<br /></span>
                     <span v-if="item.squad.unit_number">в\ч {{ item.squad.unit_number }}<br /></span>
                     <span v-if="item.squad.address">{{ item.squad.address }}<br /></span>
                   </div>
                 </div>
-                <div v-if="item.person.military.ticket" class="table__row">
-                  <div class="table__cell person-card__frame-field-name">Военный билет:</div>
-                  <div class="table__cell person-card__frame-field-value">
+                <div v-if="item.person.military.ticket" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name">Военный билет:</div>
+                  <div class="person-card__frame-field-value">
                     <span v-if="item.person.military.ticket.number">{{ item.person.military.ticket.number }}<br /></span>
                     <span v-if="item.person.military.ticket.date">{{ getDate(item.person.military.ticket.date) }}<br /></span>
                     <span v-if="item.person.military.ticket.authority">{{ item.person.military.ticket.authority }}<br /></span>
@@ -80,58 +80,58 @@
           <div class="person-card__frame">
             <div class="person-card__frame-title">Личные данные</div>
             <div class="person-card__frame-body">
-              <div class="table">
-                <div v-if="item.person.birthday" class="table__row">
-                  <div class="table__cell person-card__frame-field-name">День рождения:</div>
-                  <div class="table__cell person-card__frame-field-value">{{ getDate(item.person.birthday) }}</div>
+              <div class="person-card__frame-fields">
+                <div v-if="item.person.birthday" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name">День рождения:</div>
+                  <div class="person-card__frame-field-value">{{ getDate(item.person.birthday) }}</div>
                 </div>
-                <div v-if="item.person.passport" class="table__row">
-                  <div class="table__cell person-card__frame-field-name">Паспорт:</div>
-                  <div class="table__cell person-card__frame-field-value">
+                <div v-if="item.person.passport" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name">Паспорт:</div>
+                  <div class="person-card__frame-field-value">
                     <span v-if="item.person.passport.number">{{ item.person.passport.number }}<br /></span>
                     <span v-if="item.person.passport.date">в\ч {{ getDate(item.person.passport.date) }}<br /></span>
                     <span v-if="item.person.passport.authority">{{ item.person.passport.authority }}<br /></span>
                   </div>
                 </div>
-                <div v-if="item.person.identification_number" class="table__row">
-                  <div class="table__cell person-card__frame-field-name">ИНН:</div>
-                  <div class="table__cell person-card__frame-field-value">{{ item.person.identification_number }}</div>
+                <div v-if="item.person.identification_number" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name">ИНН:</div>
+                  <div class="person-card__frame-field-value">{{ item.person.identification_number }}</div>
                 </div>
-                <div v-if="item.person.insurance_number" class="table__row">
-                  <div class="table__cell person-card__frame-field-name">СНИЛС:</div>
-                  <div class="table__cell person-card__frame-field-value">{{ item.person.insurance_number }}</div>
+                <div v-if="item.person.insurance_number" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name">СНИЛС:</div>
+                  <div class="person-card__frame-field-value">{{ item.person.insurance_number }}</div>
                 </div>
-                <div v-if="item.person.phones && item.person.phones.length" class="table__row">
-                  <div class="table__cell person-card__frame-field-name">Телефон:</div>
-                  <div v-for="(phone, i) in item.person.phones" :key="i" class="table__cell person-card__frame-field-value">
+                <div v-if="item.person.phones && item.person.phones.length" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name">Телефон:</div>
+                  <div v-for="(phone, i) in item.person.phones" :key="i" class="person-card__frame-field-value">
                     +{{ phone }}
                   </div>
                 </div>
-                <div v-if="item.person.addresses" class="table__row">
-                  <div class="table__cell person-card__frame-field-name">Адреса:</div>
-                  <div class="table__cell person-card__frame-field-value">
+                <div v-if="item.person.addresses" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name">Адреса:</div>
+                  <div class="person-card__frame-field-value">
                       <span v-for="(address, i) in item.person.addresses" :key="i">
                         <i class="fa-solid fa-location-dot"></i> {{ address }}<br />
                       </span>
                   </div>
                 </div>
               </div>
-              <div v-if="item.person.social" class="table">
-                <div v-if="item.person.social.ok" class="table__row">
-                  <div class="table__cell person-card__frame-field-name"><i class="fa-brands fa-odnoklassniki"></i></div>
-                  <div class="table__cell person-card__frame-field-value">
+              <div v-if="item.person.social" class="person-card__frame-fields">
+                <div v-if="item.person.social.ok" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name"><i class="fa-brands fa-odnoklassniki"></i></div>
+                  <div class="person-card__frame-field-value">
                     <a :href="item.person.social.ok" target="_blank" class="link">{{ item.person.social.ok }}</a>
                   </div>
                 </div>
-                <div v-if="item.person.social.vk" class="table__row">
-                  <div class="table__cell person-card__frame-field-name"><i class="fa-brands fa-vk"></i></div>
-                  <div class="table__cell person-card__frame-field-value">
+                <div v-if="item.person.social.vk" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name"><i class="fa-brands fa-vk"></i></div>
+                  <div class="person-card__frame-field-value">
                     <a :href="item.person.social.vk" target="_blank" class="link">{{ item.person.social.vk }}</a>
                   </div>
                 </div>
-                <div v-if="item.person.social.fb" class="table__row">
-                  <div class="table__cell person-card__frame-field-name"><i class="fa-brands fa-facebook"></i></div>
-                  <div class="table__cell person-card__frame-field-value">
+                <div v-if="item.person.social.fb" class="person-card__frame-field">
+                  <div class="person-card__frame-field-name"><i class="fa-brands fa-facebook"></i></div>
+                  <div class="person-card__frame-field-value">
                     <a :href="item.person.social.fb" target="_blank" class="link">{{ item.person.social.fb }}</a>
                   </div>
                 </div>
