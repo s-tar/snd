@@ -11,7 +11,9 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { property: "og:title", content: "Seek & Destroy" },
       { property: "og:description", content: "Список военных преступников участвующих в войне в Украине" },
-      { property: "og:image", content:"/ogicon_b.png"}
+      { property: "og:image", content: process.env.BASE_URL + "/ogicon_b.png" },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: process.env.BASE_URL }
     ],
     script: [
       { defer: true, src: 'https://use.fontawesome.com/releases/v6.1.1/js/all.js', integrity: 'sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp', crossorigin: 'anonymous' },
@@ -80,7 +82,7 @@ export default {
     },
   },
   router: {
-    base: process.env.BASE_URL,
+    base: process.env.BASE_PATH,
     middleware: ['auth']
   },
   auth: {

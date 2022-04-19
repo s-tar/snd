@@ -19,7 +19,7 @@ settings = get_settings()
 app = FastAPI(
     title=settings.app_title,
     root_path=settings.app_root_path,
-    docs_url=settings.docs_url,
+    docs_url=settings.docs_path,
     redoc_url=None,
 )
 app.add_middleware(

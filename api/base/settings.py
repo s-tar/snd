@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     app_root_path: str
     app_title: str
 
-    docs_url: str
+    docs_path: str
 
     database_protocol: str
     database_host: str
