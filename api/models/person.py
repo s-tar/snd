@@ -42,6 +42,7 @@ class Relative(EmbeddedModel):
     address: Optional[str]
     phones: Optional[List[int]]
     social: Optional[Social]
+    passport: Optional[Doc]
 
 
 class Person(Model):

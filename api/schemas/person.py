@@ -46,6 +46,7 @@ class Relative(BaseModel):
     address: Optional[str]
     phones: Optional[List[int]]
     social: Optional[Social]
+    passport: Optional[Doc]
 
 
 class Person(BaseModel):

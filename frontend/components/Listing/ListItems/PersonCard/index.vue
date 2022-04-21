@@ -45,14 +45,14 @@
             <Field name="Звание" :value="getRank(item.person.military.rank)" />
             <Field name="Должность" :value="item.person.military.post" />
             <SquadField name="Подразделение" :value="item.person.military.squadData || {}" />
-            <Field name="Военный билет" :value="Object.values(item.person.military.ticket || {})" />
+            <Field name="Военный билет" :value="Object.values(getDoc(item.person.military.ticket))" />
           </InfoFrame>
         </div>
         <div v-if="Object.keys(personal).length > 0" class="person-card__frame-col">
           <InfoFrame title="Личные данные" type="table">
             <Field name="День рождения" :value="getDate(personal.birthday)" />
             <Field name="Место рождения" :value="personal.city_of_birth" />
-            <Field name="Паспорт" :value="Object.values(personal.passport || {})" />
+            <Field name="Паспорт" :value="Object.values(getDoc(personal.passport))" />
             <Field name="ИНН" :value="personal.identification_number" />
             <Field name="СНИЛС" :value="personal.insurance_number" />
             <Field name="Телефон" :value="personal.phones" />
@@ -118,7 +118,7 @@ export default {
       const personal = {
         birthday: this.item.person.birthday,
         city_of_birth: this.item.person.city_of_birth,
-        passport: this.passport,
+        passport: this.item.person.passport,
         identification_number: this.item.identification_number,
         insurance_number: this.item.person.insurance_number,
         phones: this.phones,
@@ -137,21 +137,21 @@ export default {
       }
       return personal
     },
-    passport() {
-      if (!this.item.person.passport) {
-        return {}
-      }
-      return {
-        number: this.item.person.passport.number,
-        date: this.getDate(this.item.person.passport.date),
-        authority: this.item.person.passport.authority,
-      }
-    },
     phones() {
       return (this.item.person.phones || []).map(phone => '+' + phone)
     },
   },
   methods: {
+    getDoc(doc) {
+      if (!doc) {
+        return {}
+      }
+      return {
+        number: doc.number,
+        date: doc.date ? this.getDate(doc.date) : null,
+        authority: doc.authority,
+      }
+    },
     getPhoto(person, fullScale = false) {
       let photoName = person.photo
       if (fullScale) {
