@@ -8,7 +8,7 @@
     <div class="person-card__relative-frame-info">
       <div class="person-card__relative-frame-name">{{ name }}</div>
       <InfoFrame>
-        <Field name="Родство" :value="relationship" />
+        <Field name="" :value="relationship" />
         <Field name="Дата рождения" :value="birthday" />
         <Field name="Телефон" :value="phonesString" />
         <AddressField name="Адрес" :value="address" />
