@@ -91,12 +91,12 @@
 </template>
 
 <script>
-import InfoFrame from './parts/InfoFrame'
-import Field from './parts/Field'
-import AddressField from './parts/AddressField'
-import SquadField from './parts/SquadField'
-import SocialField from './parts/SocialField'
-import RelativeFrame from './parts/RelativeFrame'
+import InfoFrame from './parts/InfoFrame.vue'
+import Field from './parts/Field.vue'
+import AddressField from './parts/AddressField.vue'
+import SquadField from './parts/SquadField.vue'
+import SocialField from './parts/SocialField.vue'
+import RelativeFrame from './parts/RelativeFrame.vue'
 import { RANKS } from '~/utils/ranks'
 import { RELATIONSHIP } from '~/utils/relationship'
 import { formatDateTime } from '~/utils/datetime'
