@@ -31,3 +31,6 @@ class Relationship(IntEnum):
     COUSIN_SISTER = 12
     AUNT = 13
     UNCLE = 14
+
+    STEPFATHER = 15
+    STEPMOTHER = 16

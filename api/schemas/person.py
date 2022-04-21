@@ -43,6 +43,7 @@ class Relative(BaseModel):
     relationship: Relationship
     photo: Optional[str]
     birthday: Optional[datetime.date]
+    address: Optional[str]
     phones: Optional[List[int]]
     social: Optional[Social]
 

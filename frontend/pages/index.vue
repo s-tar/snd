@@ -1,6 +1,6 @@
 <script>
 import Listing from '~/components/Listing'
-import PersonCard from '~/components/Listing/ItemsList/PersonCard'
+import PersonCard from '~/components/Listing/ListItems/PersonCard'
 
 export default {
   extends: Listing,
@@ -27,12 +27,14 @@ export default {
     },
     items() {
       return this.persons.items.map((person, index) => {
+        if (person.military && person.military.squad) {
+          person.military.squadData = this.squads[person.military.squad]
+        }
         return {
           id: person.code,
           icon: 'fa-solid fa-user',
           title: `${person.last_name} ${person.first_name}  ${person.middle_name || ''}`,
           person,
-          squad: person.military ? this.squads[person.military.squad] : null,
           description: person.birthday,
           active: true,
           click: () => {

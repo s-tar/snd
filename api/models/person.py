@@ -39,6 +39,7 @@ class Relative(EmbeddedModel):
     relationship: Relationship
     photo: Optional[str]
     birthday: Optional[Date]
+    address: Optional[str]
     phones: Optional[List[int]]
     social: Optional[Social]
 

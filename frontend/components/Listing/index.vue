@@ -34,12 +34,12 @@
       </AsyncForm>
     </div>
     <component
-      v-if="visibleItems.length"
+      v-for="(item, i) in visibleItems"
       :is="itemsListComponent"
-      :items="visibleItems"
-      :getDeleteUrl="getDeleteUrl"
+      :item="item"
+      :key="i"
     />
-    <div v-else>
+    <div v-if="visibleItems.length == 0">
       Ничего не найдено.
     </div>
     <div class="container container--centred">
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import Card from './ItemsList/Card'
+import Card from './ListItems/Card'
 import MainTitle from '~/components/MainTitle'
 import Pagination from '~/components/Pagination'
 import SelectField from '~/components/AsyncForm/fields/Select'
