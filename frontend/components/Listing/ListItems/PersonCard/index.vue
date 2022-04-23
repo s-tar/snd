@@ -10,19 +10,19 @@
         <img v-if="item.person.photo" :src="getPhoto(item.person)" class="person-card__photo-image" alt="" @click="onPhotoClick(item.person)" />
         <i v-else :class="item.icon"></i>
       </div>
-      <div class="person-card__container person-card__title" @click="item.click">
-        <div v-if="item.person.country" class="person-card__badge person-card__country-flag-badge">
+      <div class="person-card__container person-card__title" @click.self="item.click">
+        <div v-if="item.person.country" class="person-card__badge person-card__country-flag-badge" @click="item.click">
           <Flag :code="item.person.country" />
         </div>
-        <div class="person-card__name">
+        <div class="person-card__name" @click="item.click">
           <span v-if="item.person.last_name">{{ item.person.last_name }}</span>
           <span v-if="item.person.first_name">{{ item.person.first_name }}</span>
           <span v-if="item.person.middle_name">{{ item.person.middle_name }}</span>
         </div>
         <div v-if="item.person.birthday" class="person-card__birthday">{{ getDate(item.person.birthday) }}р.</div>
       </div>
-      <div class="person-card__short-info" @click="item.click">
-        <div v-if="item.person.military" class="person-card__container">
+      <div class="person-card__short-info" @click.self="item.click">
+        <div v-if="item.person.military" class="person-card__container" @click="item.click">
           <div>
             <div
               v-if="item.person.military.rank"
@@ -31,9 +31,15 @@
             ></div>
           </div>
           <div>
-            <div>{{ item.person.military.post }} ({{ getRank(item.person.military.rank) }})</div>
+            <div>
+              <span v-if="item.person.military.post">{{ item.person.military.post }}</span>
+              <span class="person-card__short-info-rank">{{ getRank(item.person.military.rank) }}</span>
+            </div>
             <div v-if="item.person.military && item.person.military.squadData">{{ item.person.military.squadData.name }}</div>
           </div>
+        </div>
+        <div v-if="item.person.tags" class="person-card__container person-card__tags">
+          <a v-for="tag in item.person.tags" class="link person-card__tag" :href="`/?s=${tag}`" :key="tag">#{{ tag }}</a>
         </div>
       </div>
     </div>

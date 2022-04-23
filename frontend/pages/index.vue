@@ -19,9 +19,6 @@ export default {
     itemsListComponent() {
       return PersonCard
     },
-    mainButtons() {
-      return []
-    },
     maxPage() {
       return this.persons.max_page
     },
