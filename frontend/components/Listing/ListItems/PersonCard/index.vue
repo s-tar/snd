@@ -92,6 +92,11 @@
           </InfoFrame>
         </div>
       </div>
+      <div v-if="item.person.sources" class="person-card__frame-row">
+        <InfoFrame type="table">
+          <Field name="Источник" :value="item.person.sources" />
+        </InfoFrame>
+      </div>
     </div>
   </div>
 </template>
