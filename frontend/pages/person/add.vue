@@ -3,7 +3,7 @@
     <div class="container container--separated container--v-centred">
       <MainTitle title="Add person" />
     </div>
-    <PersonForm :person="{}" />
+    <PersonForm :data="{}" />
   </div>
 </template>
 

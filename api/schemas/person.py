@@ -35,7 +35,7 @@ class Military(BaseModel):
     ticket: Doc = None
     rank: Rank = None
     post: str = None
-    squad: MongoId = None
+    unit: MongoId = None
 
 
 class Relative(BaseModel):
@@ -109,13 +109,13 @@ class AddManyPersonRequest(BaseModel):
     persons: List[Person]
 
 
-class PersonResponse(Person):
+class PersonPublicData(Person):
     id: MongoId
     code: str
 
 
 class PersonListResponse(Pagination, ResponseModel):
-    items: List[PersonResponse]
+    items: List[PersonPublicData]
 
 
 class PersonIdResponse(ResponseModel):
@@ -124,3 +124,7 @@ class PersonIdResponse(ResponseModel):
 
 class AddMultipleResponse(ResponseModel):
     fails: Dict[int, str]
+
+
+class PersonResponse(ResponseModel):
+    person: PersonPublicData

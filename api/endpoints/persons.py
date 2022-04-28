@@ -17,12 +17,13 @@ from lib.files import remove_by_name
 from lib.files import save_image
 from lib.pagination import paginate
 from models.person import Person
-from models.squad import Squad
+from models.military_unit import MilitaryUnit
 from models.user import User
 from schemas.person import AddManyPersonRequest
 from schemas.person import PersonIdResponse
 from schemas.person import AddMultipleResponse
 from schemas.person import PersonListResponse
+from schemas.person import PersonPublicData
 from schemas.person import PersonResponse
 from schemas.person import SavePersonRequest
 from schemas.response import Status
@@ -54,21 +55,26 @@ async def add_many_person_endpoint(
     data: AddManyPersonRequest,
     editor: User = Depends(get_editor),
 ):
-    squad_ids = {
-        ObjectId(person.military.squad)
+    unit_ids = {
+        person.military.unit
         for person in data.persons
-        if person.military and person.military.squad
+        if person.military and person.military.unit
     }
-    squads = {
-        squad.id: squad
-        for squad in await database.find(Squad, Squad.id.in_(list(squad_ids)))
+    units = {
+        unit.number: unit
+        for unit in await database.find(
+            MilitaryUnit,
+            MilitaryUnit.number.in_(list(unit_ids))
+        )
     }
 
     persons = []
     person_codes = []
     for person_data in data.persons:
-        if person_data.military and person_data.military.squad not in squads:
-            raise FieldValidationError("military.squad", "Squad not found")
+        if person_data.military and person_data.military.unit not in units:
+            raise FieldValidationError(
+                "military.unit", "Military unit not found"
+            )
 
         person = Person(
             **person_data.dict(exclude_unset=True),
@@ -191,7 +197,24 @@ async def all_persons_endpoint(
         per_page=persons_page.per_page,
         max_page=persons_page.max_page,
         items=[
-            PersonResponse(**item.dict())
+            PersonPublicData(**item.dict())
             for item in persons_page.items
         ],
+    )
+
+
+@router.get(
+    "/{person_code}",
+    status_code=status.HTTP_200_OK,
+    response_model=PersonResponse,
+    summary="Get person by code"
+)
+async def all_persons_endpoint(person_code: str):
+    person = await database.find_one(Person, {"code": person_code})
+    if not person:
+        raise FieldValidationError("code", "Person not found")
+
+    return PersonResponse(
+        status=Status.OK,
+        person=PersonPublicData(**person.dict()),
     )

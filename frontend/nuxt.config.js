@@ -55,6 +55,8 @@ export default {
   plugins: [
     { src: '~/plugins/vue-flagpack.js', mode: 'client' },
     { src: '~/plugins/v-viewer', mode: 'client' },
+    { src: '~/plugins/vue-advanced-cropper', mode: 'client' },
+    { src: '~/plugins/datepicker', mode: 'client' },
     '~/plugins/axios',
   ],
 
@@ -108,7 +110,7 @@ export default {
       local: {
         endpoints: {
           login: { url: 'auth/login', method: 'post', propertyName: 'access_token' },
-          user: { url: 'users/me', method: 'get', propertyName: '' },
+          user: { url: 'user/me', method: 'get', propertyName: '' },
           logout: false,
         }
       }

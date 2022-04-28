@@ -18,6 +18,9 @@
           <span v-if="item.person.last_name">{{ item.person.last_name }}</span>
           <span v-if="item.person.first_name">{{ item.person.first_name }}</span>
           <span v-if="item.person.middle_name">{{ item.person.middle_name }}</span>
+          <a :href="`/person/${item.person.code}/edit`" class="link person-card__edit-link" @click.stop="">
+            (Редактировать)
+          </a>
         </div>
         <div v-if="item.person.birthday" class="person-card__birthday">{{ getDate(item.person.birthday) }}р.</div>
       </div>
@@ -35,7 +38,7 @@
               <span v-if="item.person.military.post">{{ item.person.military.post }}</span>
               <span class="person-card__short-info-rank">{{ getRank(item.person.military.rank) }}</span>
             </div>
-            <div v-if="item.person.military && item.person.military.squadData">{{ item.person.military.squadData.name }}</div>
+            <div v-if="item.person.military && item.person.military.unitData">{{ item.person.military.unitData.name }}</div>
           </div>
         </div>
         <div v-if="item.person.tags" class="person-card__container person-card__tags">
@@ -50,7 +53,7 @@
             <Field name="Личный номер" :value="item.person.military.number" />
             <Field name="Звание" :value="getRank(item.person.military.rank)" />
             <Field name="Должность" :value="item.person.military.post" />
-            <SquadField name="Подразделение" :value="item.person.military.squadData || {}" />
+            <MilitaryUnitField name="Подразделение" :value="item.person.military.unitData || {}" />
             <Field name="Военный билет" :value="Object.values(getDoc(item.person.military.ticket))" />
           </InfoFrame>
         </div>
@@ -105,7 +108,7 @@
 import InfoFrame from './parts/InfoFrame'
 import Field from './parts/Field'
 import AddressField from './parts/AddressField'
-import SquadField from './parts/SquadField'
+import MilitaryUnitField from './parts/MilitaryUnitField'
 import SocialField from './parts/SocialField'
 import RelativeFrame from './parts/RelativeFrame'
 import { RANKS } from '~/utils/ranks'
@@ -117,7 +120,7 @@ export default {
     InfoFrame,
     Field,
     AddressField,
-    SquadField,
+    MilitaryUnitField,
     SocialField,
     RelativeFrame,
   },
