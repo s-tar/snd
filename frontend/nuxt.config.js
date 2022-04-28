@@ -15,8 +15,20 @@ export default {
       { property: "og:type", content: "website" },
       { property: "og:url", content: process.env.BASE_URL }
     ],
+    __dangerouslyDisableSanitizers: ['script', 'innerHTML'],
     script: [
-      { defer: true, src: 'https://use.fontawesome.com/releases/v6.1.1/js/all.js', integrity: 'sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp', crossorigin: 'anonymous' },
+      { src: 'https://www.googletagmanager.com/gtag/js?id=G-Z8VSV918JY', defer: true },
+      {
+        innerHTML: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-Z8VSV918JY');
+        `,
+        type: 'text/javascript',
+        charset: 'utf-8',
+      },
+      { src: 'https://use.fontawesome.com/releases/v6.1.1/js/all.js', defer: true, integrity: 'sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp', crossorigin: 'anonymous' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
