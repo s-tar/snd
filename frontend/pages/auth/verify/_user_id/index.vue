@@ -7,7 +7,7 @@
       <AsyncForm
         v-slot="form"
         json
-        action="/users/verify"
+        action="/user/verify"
         method="post"
         class="form"
         :errors="errors"

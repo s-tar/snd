@@ -6,7 +6,7 @@
     <div class="card__body">
       <AsyncForm
         v-slot="form"
-        action="/users/register"
+        action="/user/register"
         method="post"
         class="form"
         json

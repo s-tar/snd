@@ -65,7 +65,7 @@
             <Field name="Личный номер" :value="item.person.military.number" />
             <Field name="Звание" :value="getRank(item.person.military.rank)" />
             <Field name="Должность" :value="item.person.military.post" />
-            <MilitaryUnitField name="Подразделение" :value="item.person.military.unitData || {}" />
+            <MilitaryUnitField name="Воинская часть" :value="item.person.military.unitData || {}" />
             <Field name="Военный билет" :value="Object.values(getDoc(item.person.military.ticket))" />
           </InfoFrame>
         </div>

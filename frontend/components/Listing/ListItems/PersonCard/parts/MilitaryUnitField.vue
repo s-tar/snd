@@ -3,7 +3,7 @@
     <template #value>
       <div>
         <div v-if="value.name">{{ value.name }}</div>
-        <div v-if="value.unit_number">в/ч {{ value.unit_number }}</div>
+        <div v-if="value.number">в/ч {{ value.number }}</div>
         <div v-if="value.address">
           <i class="fa-solid fa-location-dot"></i> {{ value.address }}
         </div>
