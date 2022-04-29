@@ -7,8 +7,16 @@
   >
     <div class="person-card__header">
       <div class="person-card__photo">
+        <div v-if="item.person.status > 1" class="person-card__photo-badge">
+          <i v-if="item.person.status === 2" class="fa-solid fa-skull-crossbones" title="Умер"></i>
+          <i v-else-if="item.person.status === 3" class="fa-solid fa-handcuffs" title="В плену"></i>
+        </div>
         <img v-if="item.person.photo" :src="getPhoto(item.person)" class="person-card__photo-image" alt="" @click="onPhotoClick(item.person)" />
-        <i v-else :class="item.icon"></i>
+        <div v-else>
+          <i v-if="item.person.status === 2" class="fa-solid fa-skull"></i>
+          <i v-else-if="item.person.status === 3" class="fa-solid fa-handcuffs"></i>
+          <i v-else class="fa-solid fa-user"></i>
+        </div>
       </div>
       <div class="person-card__container person-card__title" @click.self="item.click">
         <div v-if="item.person.country" class="person-card__badge person-card__country-flag-badge" @click="item.click">
@@ -18,7 +26,7 @@
           <span v-if="item.person.last_name">{{ item.person.last_name }}</span>
           <span v-if="item.person.first_name">{{ item.person.first_name }}</span>
           <span v-if="item.person.middle_name">{{ item.person.middle_name }}</span>
-          <a :href="`/person/${item.person.code}/edit`" class="link person-card__edit-link" @click.stop="">
+          <a v-if="canEdit" :href="`/person/${item.person.code}/edit`" class="link person-card__edit-link" @click.stop="">
             (Редактировать)
           </a>
         </div>
@@ -29,20 +37,24 @@
           <div>
             <div
               v-if="item.person.military.rank"
-              :class="'person-card__badge person-card__rank-badge ' + 'rank-' + item.person.military.rank.toLowerCase()"
+              :class="{
+                'person-card__badge person-card__rank-badge': true,
+                ['rank-' + item.person.military.rank.toLowerCase()]: true
+              }"
               :title="getRank(item.person.military.rank)"
             ></div>
+            <div v-else class="person-card__badge person-card__rank-badge"></div>
           </div>
           <div>
             <div>
               <span v-if="item.person.military.post">{{ item.person.military.post }}</span>
-              <span class="person-card__short-info-rank">{{ getRank(item.person.military.rank) }}</span>
+              <span v-if="item.person.military.rank" class="person-card__short-info-rank">{{ getRank(item.person.military.rank) }}</span>
             </div>
             <div v-if="item.person.military && item.person.military.unitData">{{ item.person.military.unitData.name }}</div>
           </div>
         </div>
         <div v-if="item.person.tags" class="person-card__container person-card__tags">
-          <a v-for="tag in item.person.tags" class="link person-card__tag" :href="`/?s=${tag}`" :key="tag">#{{ tag }}</a>
+          <a v-for="tag in item.person.tags" :key="tag" class="link person-card__tag" :href="`/?s=${tag}`">#{{ tag }}</a>
         </div>
       </div>
     </div>
@@ -75,7 +87,9 @@
       <div v-if="item.person.extra" class="person-card__frame-row">
         <div class="person-card__frame-col">
           <InfoFrame title="Дополнительная информация">
-            {{ item.person.extra }}
+            <div class="person-card__extra">
+              <div v-for="(line, i) in item.person.extra.split('\n')" :key="i">{{ line || '&nbsp;' }}</div>
+            </div>
           </InfoFrame>
         </div>
       </div>
@@ -128,6 +142,9 @@ export default {
     item: { type: Object, required: true },
   },
   computed: {
+    canEdit() {
+      return this.$auth.user && this.$auth.user.role > 1
+    },
     personal() {
       const personal = {
         birthday: this.item.person.birthday,

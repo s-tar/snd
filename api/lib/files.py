@@ -28,7 +28,14 @@ def save_file(file, name, upload_folder):
     return file
 
 
-async def save_image(file, name, upload_folder, hex=None, size=None, fill=FILL.CONTAINS):
+async def save_image(
+    file,
+    name,
+    upload_folder,
+    size=None,
+    crop=None,
+    fill=FILL.CONTAINS,
+):
     if not (isinstance(file, UploadFile) and file.filename):
         return
 
@@ -41,6 +48,9 @@ async def save_image(file, name, upload_folder, hex=None, size=None, fill=FILL.C
     await file.seek(0)
     image = Image.open(BytesIO(await file.read()))
     extension = image.format.lower()
+    if crop:
+        image = image.crop(crop)
+
     if size:
         ratio_x = size[0] / image.size[0]
         ratio_y = size[1] / image.size[1]
@@ -57,15 +67,7 @@ async def save_image(file, name, upload_folder, hex=None, size=None, fill=FILL.C
             top = round((height - size[1]) / 2)
             image = image.crop((left, top, left + size[0], top + size[0]))
 
-    filename = [name]
-    if hex:
-        filename.append(hex)
-    if size:
-        filename.append("%sx%s" % size)
-    filename.append(extension)
-
-    filename = ".".join(filename)
-
+    filename = f"{name}.{extension}"
     if file.content_type == "image/jpeg":
         image.save(
             os.path.join(upload_folder, filename),

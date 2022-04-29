@@ -11,16 +11,14 @@
       {{ label }}
     </label>
     <datepicker
+      :id="id"
+      ref="field"
+      v-model="fieldValue"
       :language="dateLocale"
       format="dd.MM.yyyy"
       monday-first
       calendar-button-icon="fa-solid fa-calendar-days"
-      ref="field"
-      :id="id"
-      v-model="fieldValue"
       v-bind="$attrs"
-      v-on="$listeners"
-      :name="name"
       :disabled="readonly"
       :input-class="{
         'form__field': true,
@@ -30,7 +28,8 @@
         'form__field--readonly': readonly,
         ...fieldClass,
       }"
-      @change="onChange"
+      v-on="$listeners"
+      @selected="onSelect"
       @focus="onFocus"
       @blur="onBlur"
     />
@@ -66,9 +65,13 @@ export default {
     },
   },
   methods: {
-    onChange(e) {
+    onSelect(date) {
       this.changed = true
       this.error = null
+      if (this.$listeners.update) {
+        date = date.toISOString().split('T')[0]
+        this.$listeners.update(this.name, date, null)
+      }
     },
     onFocus(e) {
       this.isFocused = true

@@ -26,7 +26,7 @@
       <div class="form__field-photo-window">
         <cropper
           class="form__field-photo-popup-image"
-          :src="file"
+          :src="fileData"
           :stencil-props="{ aspectRatio: 1 }"
           @change="onCrop"
         />
@@ -58,15 +58,16 @@ export default {
   components: {
     'field-error': FieldError,
   },
+  extends: Field,
   props: {
     name: { type: String, required: true },
     value: { type: String, default: null },
     change: { type: Function, default: null },
   },
-  extends: Field,
   data() {
     return {
       file: null,
+      fileData: null,
       showPopup: false,
       coordinates: null,
       canvas: null,
@@ -82,8 +83,8 @@ export default {
     },
     onChange(e) {
       this.error = null
-      const file = e.target.files[0]
-      if (!this.isImage(file)) {
+      this.file = e.target.files[0]
+      if (!this.isImage(this.file)) {
         this.error = 'Файл не является картинкой'
         return
       }
@@ -91,21 +92,26 @@ export default {
       reader.onload = (e) => {
         this.onFileLoaded(e.target.result)
       }
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(this.file)
     },
-    onFileLoaded(file) {
-      this.file = file
+    onFileLoaded(fileData) {
+      this.fileData = fileData
       this.showPopup = true
     },
     onCropApply() {
       if (this.$listeners.change) {
         this.$listeners.change(this.file, this.coordinates, this.canvas)
       }
+      if (this.$listeners.update) {
+        this.$listeners.update(this.name, this.coordinates, this.$refs.file.files[0])
+      }
+
       this.showPopup = false
     },
     onCropCancel() {
       this.showPopup = false
       this.file = null
+      this.fileData = null
       this.$refs.file.value = ''
       this.coordinates = null
     },

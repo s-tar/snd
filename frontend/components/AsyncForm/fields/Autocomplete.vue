@@ -11,7 +11,7 @@
       {{ label }}
     </label>
     <div class="form__field-wrapper">
-      <input type="hidden" :name="name" value="selectedValue" />
+      <input type="hidden" :name="name" :value="selectedValue" />
       <input
         :id="id"
         ref="field"
@@ -88,6 +88,11 @@ export default {
           const rect = this.$refs.list.getBoundingClientRect()
           this.isUpper = window.innerHeight < rect.bottom
         })
+      }
+    },
+    selectedValue(value) {
+      if (this.$listeners.update) {
+        this.$listeners.update(this.name, value, null)
       }
     },
     value(value) {

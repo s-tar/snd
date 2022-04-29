@@ -51,7 +51,7 @@
 import AsyncForm from '~/components/AsyncForm'
 import InputField from '~/components/AsyncForm/fields/Input'
 import Submit from '~/components/AsyncForm/fields/Submit'
-import { STATUS } from '~/utils/response_status'
+import { RESPONSE_STATUS } from '~/utils/response_status'
 
 export default {
   auth: 'guest',
@@ -93,10 +93,10 @@ export default {
       }
     },
     isSuccess(response) {
-      return response.data.status !== STATUS.DATA_VALIDATION_FAILED
+      return response.data.status !== RESPONSE_STATUS.DATA_VALIDATION_FAILED
     },
     onSuccess(response) {
-      if (response.data.status === STATUS.OK) {
+      if (response.data.status === RESPONSE_STATUS.OK) {
         this.$auth.setUserToken(response.data.access_token)
         this.$router.push('/')
       }

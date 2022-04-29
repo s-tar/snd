@@ -17,13 +17,13 @@ export default {
     ],
     __dangerouslyDisableSanitizers: ['script', 'innerHTML'],
     script: [
-      { src: 'https://www.googletagmanager.com/gtag/js?id=G-Z8VSV918JY', defer: true },
+      { src: 'https://www.googletagmanager.com/gtag/js?id=' + process.env.GOOGLE_ANALYTICS_CODE, defer: true },
       {
         innerHTML: `
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-Z8VSV918JY');
+          gtag('config', '${process.env.GOOGLE_ANALYTICS_CODE}');
         `,
         type: 'text/javascript',
         charset: 'utf-8',

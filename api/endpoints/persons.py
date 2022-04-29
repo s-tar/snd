@@ -20,12 +20,13 @@ from models.person import Person
 from models.military_unit import MilitaryUnit
 from models.user import User
 from schemas.person import AddManyPersonRequest
+from schemas.person import AddPersonRequest
 from schemas.person import PersonIdResponse
 from schemas.person import AddMultipleResponse
 from schemas.person import PersonListResponse
 from schemas.person import PersonPublicData
 from schemas.person import PersonResponse
-from schemas.person import SavePersonRequest
+from schemas.person import UpdatePersonRequest
 from schemas.response import Status
 from services.person import create_person_code
 from services.user import get_editor
@@ -41,6 +42,66 @@ def get_code(person):
         birthday=person.birthday,
     )
 
+
+async def save_person(data, person_id=None, photo=None):
+    setting = get_settings()
+    update_data = data.dict(exclude_unset=True)
+    if "photo" in update_data:
+        del update_data["photo"]
+
+    if person_id:
+        person = await database.find_one(Person, Person.id == person_id)
+        if not person:
+            raise FieldValidationError("id", "Person not found")
+        person = Person(**merge(person.dict(exclude_none=True), update_data))
+    else:
+        person = Person(**update_data, code='')
+
+    person.code = get_code(person)
+    check_code_person = (
+        await database.find_one(Person, Person.code == person.code)
+    )
+
+    if check_code_person and check_code_person.id != person.id:
+        return None, ("first_name", f"Person already exist")
+
+    await database.save(person)
+
+    if photo and data.photo:
+        upload_folder = f"{setting.file_upload_folder}/person/{str(person.id)}"
+        previous_photo = None
+        if person.photo:
+            name, hex, _ = person.photo.rsplit(".", 2)
+            previous_photo = f"{name}.{hex}"
+
+        hex = uuid4().hex
+        await save_image(
+            file=photo,
+            name=f"photo.{hex}",
+            upload_folder=upload_folder,
+            size=(1024, 1024),
+            fill=FILL.CONTAINS,
+        )
+        thumbnail_name = await save_image(
+            file=photo,
+            name=f"photo.{hex}.100x100",
+            upload_folder=upload_folder,
+            size=(100, 100),
+            crop=(
+                data.photo.left,
+                data.photo.top,
+                data.photo.left + data.photo.width,
+                data.photo.top + data.photo.height,
+            ),
+            fill=FILL.COVER,
+        )
+        if thumbnail_name:
+            person.photo = thumbnail_name
+            await database.save(person)
+            if previous_photo:
+                remove_by_name(upload_folder, "photo", exclude=f"photo.{hex}")
+
+    return person
 
 @router.post(
     "/add_many",
@@ -103,67 +164,38 @@ async def add_many_person_endpoint(
 
 
 @router.post(
-    "/save",
+    "/add",
     status_code=status.HTTP_200_OK,
     response_model=PersonIdResponse,
     responses={
         status.HTTP_403_FORBIDDEN: {"description": "Operation forbidden"},
     },
-    summary="Save person to blacklist"
+    summary="Add person to blacklist"
 )
-async def save_person_endpoint(
-    data: SavePersonRequest,
-    setting: Settings = Depends(get_settings),
+async def add_person_endpoint(
+    data: AddPersonRequest,
     photo: UploadFile = File(None),
     editor: User = Depends(get_editor),
 ):
-    if data.id:
-        person = await database.find_one(Person, Person.id == data.id)
-        if not person:
-            raise FieldValidationError("id", "Person not found")
+    person = await save_person(data, photo=photo)
+    return PersonIdResponse(id=str(person.id))
 
-        person = Person(**merge(
-            person.dict(exclude_none=True),
-            data.dict(exclude_unset=True)
-        ))
-    else:
-        person = Person(**data.dict(exclude_unset=True), code='')
 
-    person.code = get_code(person)
-    check_code_person = await database.find_one(Person, Person.code == person.code)
-    if check_code_person and check_code_person.id != person.id:
-        return None, ("first_name", f"Person already exist")
-
-    await database.save(person)
-
-    if photo:
-        upload_folder = f"{setting.file_upload_folder}/person/{str(person.id)}"
-        previous_photo = None
-        if person.photo:
-            name, hex, _ = person.photo.rsplit(".", 2)
-            previous_photo = f"{name}.{hex}"
-
-        hex = uuid4().hex
-        await save_image(
-            file=photo,
-            name="photo",
-            hex=hex,
-            upload_folder=upload_folder,
-        )
-        thumbnail_name = await save_image(
-            file=photo,
-            name="photo",
-            hex=hex,
-            upload_folder=upload_folder,
-            size=(100, 100),
-            fill=FILL.COVER,
-        )
-        if thumbnail_name:
-            person.photo = thumbnail_name
-            await database.save(person)
-            if previous_photo:
-                remove_by_name(upload_folder, "photo", exclude=f"photo.{hex}")
-
+@router.post(
+    "/update",
+    status_code=status.HTTP_200_OK,
+    response_model=PersonIdResponse,
+    responses={
+        status.HTTP_403_FORBIDDEN: {"description": "Operation forbidden"},
+    },
+    summary="Update person to blacklist"
+)
+async def update_person_endpoint(
+    data: UpdatePersonRequest,
+    photo: UploadFile = File(None),
+    editor: User = Depends(get_editor),
+):
+    person = await save_person(data, person_id=data.id, photo=photo)
     return PersonIdResponse(id=str(person.id))
 
 

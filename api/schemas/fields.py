@@ -2,6 +2,7 @@ import datetime
 import re
 
 from bson import ObjectId
+from pydantic import BaseModel
 
 
 class MongoId(ObjectId):
@@ -59,3 +60,10 @@ class Date(datetime.datetime):
     @classmethod
     def validate(cls, v):
         return datetime.datetime(v.year, v.month, v.day)
+
+
+class PhotoContainer(BaseModel):
+    width: int
+    height: int
+    left: int
+    top: int

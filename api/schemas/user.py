@@ -3,7 +3,9 @@ import re
 from pydantic import BaseModel
 from pydantic import validator
 from pydantic.networks import EmailStr
+from typing import Dict
 
+from models.user import Roles
 from schemas.fields import MongoId
 from schemas.fields import NotEmptyString
 from schemas.response import ResponseModel
@@ -13,6 +15,7 @@ class UserResponse(ResponseModel):
     id: MongoId
     name: str
     email: EmailStr
+    role: Roles
 
 
 class UserWithTokenResponse(UserResponse):

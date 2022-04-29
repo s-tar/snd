@@ -12,8 +12,10 @@ from constants.person import PersonType
 from constants.person import Relationship
 from constants.ranks import Rank
 from schemas.base import BaseModel
+from schemas.base import JsonRequestModel
 from schemas.fields import MongoId
 from schemas.fields import NotEmptyString
+from schemas.fields import PhotoContainer
 from schemas.pagination import Pagination
 from schemas.response import ResponseModel
 
@@ -25,7 +27,7 @@ class Social(BaseModel):
 
 
 class Doc(BaseModel):
-    number: str
+    number: str = None
     date: datetime.date = None
     authority: str = None
 
@@ -84,25 +86,19 @@ class Person(BaseModel):
     sources: Optional[List[str]]
 
 
-class SavePersonRequest(Person):
+class AddPersonRequest(JsonRequestModel, Person):
+    photo: PhotoContainer = None
+
+
+class UpdatePersonRequest(JsonRequestModel, Person):
     id: MongoId = None
     first_name: str = None
     last_name: str = None
     middle_name: str = None
-
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.validate_to_json
-
-    @classmethod
-    def validate_to_json(cls, value):
-        if isinstance(value, str):
-            return cls(**json.loads(value))
-        return value
-
-
-class UpdatePersonRequest(Person):
-    pass
+    photo: PhotoContainer = None
+    phones: List[Optional[str]] = None
+    addresses: List[Optional[str]] = None
+    tags: List[Optional[str]] = None
 
 
 class AddManyPersonRequest(BaseModel):
