@@ -8,6 +8,7 @@ export default {
   props: {
     action: { type: String, default: '' },
     method: { type: String, default: 'POST' },
+    processErrors: { type: Function, default: null },
     processData: { type: Function, default: null },
     isSuccess: { type: Function, default: null },
     onSuccess: { type: Function, default: null },
@@ -36,10 +37,11 @@ export default {
         child.$emit('errors', errors)
       })
     },
-    processErrors(response, showErrors) {
+    processErrors_(response, showErrors) {
       this.processing = false
-
-      if (showErrors) {
+      if (this.processErrors) {
+        this.errors_ = this.processErrors(response, showErrors)
+      } else if (showErrors) {
         const errors = {}
         response.data.detail.forEach((error) => {
           errors[error.loc[1]] = error.msg.charAt(0).toUpperCase() + error.msg.slice(1)
@@ -82,13 +84,13 @@ export default {
       })
         .then((response) => {
           if (this.isSuccess && !this.isSuccess(response)) {
-            return this.processErrors(response, true)
+            return this.processErrors_(response, true)
           } else if (this.onSuccess) {
             this.onSuccess(response)
           }
         })
         .catch((error) => {
-          this.processErrors(error.response, error.response.status === 422)
+          this.processErrors_(error.response, error.response.status === 422)
         })
     },
   },

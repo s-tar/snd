@@ -17,13 +17,13 @@ export default {
     ],
     __dangerouslyDisableSanitizers: ['script', 'innerHTML'],
     script: [
-      { src: 'https://www.googletagmanager.com/gtag/js?id=G-Z8VSV918JY', defer: true },
+      { src: 'https://www.googletagmanager.com/gtag/js?id=' + process.env.GOOGLE_ANALYTICS_CODE, defer: true },
       {
         innerHTML: `
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-Z8VSV918JY');
+          gtag('config', '${process.env.GOOGLE_ANALYTICS_CODE}');
         `,
         type: 'text/javascript',
         charset: 'utf-8',
@@ -55,6 +55,8 @@ export default {
   plugins: [
     { src: '~/plugins/vue-flagpack.js', mode: 'client' },
     { src: '~/plugins/v-viewer', mode: 'client' },
+    { src: '~/plugins/vue-advanced-cropper', mode: 'client' },
+    { src: '~/plugins/datepicker', mode: 'client' },
     '~/plugins/axios',
   ],
 
@@ -108,7 +110,7 @@ export default {
       local: {
         endpoints: {
           login: { url: 'auth/login', method: 'post', propertyName: 'access_token' },
-          user: { url: 'users/me', method: 'get', propertyName: '' },
+          user: { url: 'user/me', method: 'get', propertyName: '' },
           logout: false,
         }
       }

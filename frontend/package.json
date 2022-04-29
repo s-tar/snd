@@ -18,7 +18,10 @@
     "core-js": "^3.21.1",
     "vue-flagpack": "^1.0.1",
     "qs": "^6.10.3",
-    "v-viewer": "^1.6.4"
+    "v-viewer": "^1.6.4",
+    "uniqid": "^5.4.0",
+    "vue-advanced-cropper": "^1.10.1",
+    "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^9.0.0",

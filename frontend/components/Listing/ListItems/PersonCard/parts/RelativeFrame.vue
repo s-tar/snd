@@ -13,7 +13,7 @@
         <Field name="Телефон" :value="phonesString" />
         <AddressField name="Адрес" :value="address" />
         <div v-if="social">
-          <SocialField v-for="(link, name) in social" :key="name" :name="name" :value="link" />
+          <SocialField v-for="(link, snName) in social" :key="snName" :name="snName" :value="link" />
         </div>
       </InfoFrame>
     </div>
@@ -23,6 +23,7 @@
 <script>
 import InfoFrame from './InfoFrame'
 import Field from './Field'
+import SocialField from './SocialField'
 import AddressField from './AddressField'
 
 export default {
@@ -30,11 +31,7 @@ export default {
     AddressField,
     InfoFrame,
     Field,
-  },
-  computed: {
-    phonesString() {
-      return this.phones ? '+' + this.phones.join(', +') : null
-    },
+    SocialField,
   },
   props: {
     name: { type: String, required: true },
@@ -43,6 +40,11 @@ export default {
     address: { type: String, default: null },
     phones: { type: Array[String], default: null },
     social: { type: Object, default: null },
+  },
+  computed: {
+    phonesString() {
+      return this.phones ? '+' + this.phones.join(', +') : null
+    },
   },
 }
 </script>

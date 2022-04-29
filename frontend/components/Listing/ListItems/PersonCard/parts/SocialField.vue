@@ -1,5 +1,5 @@
 <template>
-  <Field :name="name" :value="value">
+  <Field v-if="value" :name="name" :value="value">
     <template #name>
       <span>
         <i v-if="name === 'ok'" class="fa-brands fa-odnoklassniki"></i>

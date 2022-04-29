@@ -14,7 +14,6 @@
       :id="id"
       v-model="fieldValue"
       v-bind="$attrs"
-      v-on="$listeners"
       :name="name"
       :disabled="readonly"
       :class="{
@@ -24,6 +23,7 @@
         'form__field--has-error': !!error,
         'form__field--readonly': readonly,
       }"
+      v-on="$listeners"
       @change="onChange"
       @focus="onFocus"
       @blur="onBlur"
@@ -61,6 +61,9 @@ export default {
       this.changed = true
       this.error = null
       if (this.$listeners.change) { this.$listeners.change(e) }
+      if (this.$listeners.update) {
+        this.$listeners.update(this.name, this.fieldValue, null)
+      }
     },
     onFocus() {
       this.isFocused = true

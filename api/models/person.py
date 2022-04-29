@@ -31,7 +31,7 @@ class Military(EmbeddedModel):
     ticket: Optional[Doc]
     rank: Optional[str]
     post: Optional[str]
-    squad: ObjectId
+    unit: Optional[ObjectId]
 
 
 class Relative(EmbeddedModel):

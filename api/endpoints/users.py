@@ -104,5 +104,8 @@ async def verify(
 async def read_users_me_endpoint(
     current_user: User = Depends(get_current_user)
 ):
-    return UserResponse(**current_user.dict())
+
+    return UserResponse(
+        **current_user.dict(),
+    )
 

@@ -8,8 +8,8 @@ class PersonType(IntEnum):
 
 
 class PersonStatus(IntEnum):
-    DEAD = 1
-    ALIVE = 2
+    ALIVE = 1
+    DEAD = 2
     POW = 3
     PRISONED = 4
 

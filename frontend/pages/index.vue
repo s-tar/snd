@@ -8,7 +8,7 @@ export default {
   data() {
     return {
       persons: {},
-      squads: {},
+      units: {},
     }
   },
   computed: {
@@ -24,8 +24,8 @@ export default {
     },
     items() {
       return this.persons.items.map((person, index) => {
-        if (person.military && person.military.squad) {
-          person.military.squadData = this.squads[person.military.squad]
+        if (person.military && person.military.unit) {
+          person.military.unitData = this.units[person.military.unit]
         }
         return {
           id: person.code,
@@ -41,21 +41,21 @@ export default {
         }
       })
     },
-    squadIds() {
-      const squadIds = new Set()
+    unitIds() {
+      const unitIds = new Set()
       this.persons.items.forEach((person) => {
-        if (person.military && person.military.squad) {
-          squadIds.add(person.military.squad)
+        if (person.military && person.military.unit) {
+          unitIds.add(person.military.unit)
         }
       })
-      return [...squadIds]
+      return [...unitIds]
     },
   },
   methods: {
     async init() {
       this.persons = await this.loadPersons()
-      if (this.squadIds.length > 0) {
-        this.squads = await this.loadSquads(this.squadIds)
+      if (this.unitIds.length > 0) {
+        this.units = await this.loadMilitaryUnits(this.unitIds)
       }
       this.loading = false
     },
@@ -63,27 +63,27 @@ export default {
       window.scrollTo(0, 0)
       this.loading = true
       this.persons = await this.loadPersons()
-      if (this.squadIds.length > 0) {
-        this.squads = await this.loadSquads(this.squadIds)
+      if (this.unitIds.length > 0) {
+        this.units = await this.loadMilitaryUnits(this.unitIds)
       }
       this.loading = false
     },
-    async loadSquads(ids) {
+    async loadMilitaryUnits(ids) {
       const res = await this.$axios.$get(
-        '/squads/get',
+        '/unit/get',
         {
           params: { ids },
           paramsSerializer: params => require('qs').stringify(params, { arrayFormat: 'repeat' }),
         },
       )
-      const squads = {}
-      res.items.forEach((squad) => { squads[squad.id] = squad })
-      return squads
+      const units = {}
+      res.items.forEach((unit) => { units[unit.id] = unit })
+      return units
     },
     async loadPersons() {
       const { page, s } = this.$route.query
       return await this.$axios.$get(
-        '/persons/all',
+        '/person/all',
         { params: { page, s } },
       )
     },
@@ -91,10 +91,6 @@ export default {
       const person = this.persons.items[index]
       person.showFullInfo = !person.showFullInfo
       this.$set(this.persons.items, index, person)
-    },
-    getDeleteUrl(id) {
-      const person = this.persons.findIndex(person => person.id === id)
-      return `/project/${person.code}`
     },
     onSearch(phrase) {
       this.$router.push(

@@ -6,8 +6,8 @@
   border: 0
   background: transparent
   outline: none
-  color: #ccc
-  border-bottom: 1px solid #cccccc
+  color: $default-text-color
+  border-bottom: 1px solid $default-text-color
   font-size: inherit
   font-family: inherit
   font-weight: 400
@@ -30,17 +30,20 @@
   position: absolute
 
 .form__field--focused
-  border-bottom: 1px solid #929a3d
+  border-color: $highlighted-text-color
 
 .form__field--has-error
-  border-bottom: 1px solid #f44336
+  border-color: #f44336
 
 .form__field--readonly
-    border-bottom: 1px solid #eee
-
+    border-color: #666
 
 .form__field--no-underline
   border-bottom: none
+
+.form__field--type-image
+  border: 1px solid $default-text-color
+  padding: 0
 
 .form__field--file-input
   position: absolute
@@ -52,3 +55,10 @@
 .form__field--clickable
   cursor: pointer
   text-align: center
+
+.form__field--wrapped
+  margin-top: 0
+
+.form__field option
+  border-top: 1px solid $border-color
+  color: $default-text-color

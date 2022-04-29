@@ -11,11 +11,10 @@
       {{ label }}
     </label>
     <input
-      ref="field"
       :id="id"
+      ref="field"
       v-model="fieldValue"
       v-bind="$attrs"
-      v-on="$listeners"
       :name="name"
       :disabled="readonly"
       :type="type"
@@ -27,6 +26,7 @@
         'form__field--readonly': readonly,
         ...fieldClass,
       }"
+      v-on="$listeners"
       @change="onChange"
       @focus="onFocus"
       @blur="onBlur"
@@ -55,7 +55,7 @@ export default {
   },
   watch: {
     value(value) {
-      if (!this.changed) {
+      if (!this.keepChanged || !this.changed) {
         this.fieldValue = value
       }
     },
@@ -64,6 +64,9 @@ export default {
     onChange(e) {
       this.changed = true
       this.error = null
+      if (this.$listeners.update) {
+        this.$listeners.update(this.name, this.fieldValue, null)
+      }
     },
     onFocus(e) {
       this.isFocused = true
