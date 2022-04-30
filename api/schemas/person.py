@@ -116,6 +116,7 @@ class PersonListResponse(Pagination, ResponseModel):
 
 class PersonIdResponse(ResponseModel):
     id: str
+    code: str
 
 
 class AddMultipleResponse(ResponseModel):

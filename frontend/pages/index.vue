@@ -30,13 +30,12 @@ export default {
         return {
           id: person.code,
           icon: 'fa-solid fa-user',
-          title: `${person.last_name} ${person.first_name}  ${person.middle_name || ''}`,
           person,
-          description: person.birthday,
           active: true,
-          click: () => {
+          click: (e) => {
             this.getToggleFullInfo(index)
           },
+          showFullInfo: true,
           actions: [],
         }
       })
@@ -92,11 +91,11 @@ export default {
       person.showFullInfo = !person.showFullInfo
       this.$set(this.persons.items, index, person)
     },
-    onSearch(phrase) {
+    onSearch(term) {
       this.$router.push(
         {
           name: this.$route.name,
-          query: { s: phrase },
+          query: { s: term },
         },
         () => {
           this.$router.go()

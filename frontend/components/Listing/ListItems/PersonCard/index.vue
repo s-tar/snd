@@ -5,35 +5,37 @@
       'person-card--inactive': !item.active,
     }"
   >
-    <div class="person-card__header">
+    <div :class="{ 'person-card__header': true, 'person-card__header--clickable': !item.isPersonPage }" @click="item.click">
       <div class="person-card__photo">
         <div v-if="item.person.status > 1" class="person-card__photo-badge">
           <i v-if="item.person.status === 2" class="fa-solid fa-skull-crossbones" title="Умер"></i>
           <i v-else-if="item.person.status === 3" class="fa-solid fa-handcuffs" title="В плену"></i>
         </div>
-        <img v-if="item.person.photo" :src="getPhoto(item.person)" class="person-card__photo-image" alt="" @click="onPhotoClick(item.person)" />
+        <img v-if="item.person.photo" :src="getPhoto(item.person)" class="person-card__photo-image" alt="" @click.stop="onPhotoClick(item.person)" />
         <div v-else>
           <i v-if="item.person.status === 2" class="fa-solid fa-skull"></i>
           <i v-else-if="item.person.status === 3" class="fa-solid fa-handcuffs"></i>
           <i v-else class="fa-solid fa-user"></i>
         </div>
       </div>
-      <div class="person-card__container person-card__title" @click.self="item.click">
-        <div v-if="item.person.country" class="person-card__badge person-card__country-flag-badge" @click="item.click">
-          <Flag :code="item.person.country" />
+      <div class="person-card__container person-card__title">
+        <div v-if="item.person.country" class="person-card__badge person-card__country-flag-badge">
+          <Flag :code="item.person.country" :title="getCountry(item.person.country)" />
         </div>
-        <div class="person-card__name" @click="item.click">
-          <span v-if="item.person.last_name">{{ item.person.last_name }}</span>
-          <span v-if="item.person.first_name">{{ item.person.first_name }}</span>
-          <span v-if="item.person.middle_name">{{ item.person.middle_name }}</span>
+        <div class="person-card__name">
+          <a :href="item.isPersonPage ? null : `/person/${item.person.code}`" class="link person-card__name-link" @click.stop="">
+            <span v-if="item.person.last_name">{{ item.person.last_name }}</span>
+            <span v-if="item.person.first_name">{{ item.person.first_name }}</span>
+            <span v-if="item.person.middle_name">{{ item.person.middle_name }}</span>
+          </a>
           <a v-if="canEdit" :href="`/person/${item.person.code}/edit`" class="link person-card__edit-link" @click.stop="">
             (Редактировать)
           </a>
         </div>
         <div v-if="item.person.birthday" class="person-card__birthday">{{ getDate(item.person.birthday) }}р.</div>
       </div>
-      <div class="person-card__short-info" @click.self="item.click">
-        <div v-if="item.person.military" class="person-card__container" @click="item.click">
+      <div class="person-card__short-info">
+        <div v-if="item.person.military" class="person-card__container">
           <div>
             <div
               v-if="item.person.military.rank"
@@ -127,6 +129,7 @@ import SocialField from './parts/SocialField'
 import RelativeFrame from './parts/RelativeFrame'
 import { RANKS } from '~/utils/ranks'
 import { RELATIONSHIP } from '~/utils/relationship'
+import { COUNTRIES } from '~/utils/countries'
 import { formatDateTime } from '~/utils/datetime'
 
 export default {
@@ -190,6 +193,9 @@ export default {
         photoName = `${name}.${hex}.${ext}`
       }
       return `/public/person/${person.id}/${photoName}`
+    },
+    getCountry(code) {
+      return COUNTRIES[code] || ''
     },
     getRank(code) {
       return RANKS[code] || ''

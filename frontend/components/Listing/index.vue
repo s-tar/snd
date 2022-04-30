@@ -7,9 +7,9 @@
         <nuxt-link v-for="(button, index) in mainButtons" :key="index" :to="button.url" :class="button.class">{{ button.name }}</nuxt-link>
       </div>
     </div>
-    <div v-if="this.onSearch" class="card search-wrapper">
+    <div v-if="onSearch" class="card search-wrapper">
       <div class="card__body">
-        <Search :phrase="$nuxt.$route.query['s']" placeholder="Поиск" :onSearch="onSearch"/>
+        <Search :phrase="$nuxt.$route.query['s']" placeholder="Поиск" :on-search="onSearch" />
       </div>
     </div>
     <div v-if="Object.keys(filters).length > 0" class="card">
@@ -34,10 +34,10 @@
       </AsyncForm>
     </div>
     <component
-      v-for="(item, i) in visibleItems"
       :is="itemsListComponent"
-      :item="item"
+      v-for="(item, i) in visibleItems"
       :key="i"
+      :item="item"
     />
     <div v-if="visibleItems.length == 0">
       Ничего не найдено.
@@ -62,6 +62,14 @@ export default {
     SelectField,
     Search,
   },
+  data() {
+    return {
+      loading: true,
+      deleted: {},
+      searchPhrase: '',
+      screenWidth: 0,
+    }
+  },
   async fetch() {
     try {
       await this.init()
@@ -72,23 +80,6 @@ export default {
         message: e.response.statusText,
       })
     }
-  },
-  data() {
-    return {
-      loading: true,
-      deleted: {},
-      searchPhrase: '',
-      screenWidth: 0,
-    }
-  },
-  beforeMount() {
-    window.addEventListener('resize', this.onResize)
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.onResize)
-  },
-  created() {
-    this.screenWidth = this.getScreenWidth()
   },
   computed: {
     visiblePages() {
@@ -123,6 +114,15 @@ export default {
       return this.items.filter(item => !this.deleted[item.id])
     },
     withSearch() { return false },
+  },
+  beforeMount() {
+    window.addEventListener('resize', this.onResize)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onResize)
+  },
+  created() {
+    this.screenWidth = this.getScreenWidth()
   },
   methods: {
     async init() {},

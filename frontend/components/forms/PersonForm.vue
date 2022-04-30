@@ -558,8 +558,8 @@ export default {
     isSuccess(response) {
       return response.data.status !== RESPONSE_STATUS.DATA_VALIDATION_FAILED
     },
-    onSuccess() {
-      this.$router.push('/')
+    onSuccess(response) {
+      this.$router.push(`/person/${response.data.code}`)
     },
     processErrors(response, showErrors) {
       const errors = {}

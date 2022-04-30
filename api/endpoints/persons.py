@@ -178,7 +178,7 @@ async def add_person_endpoint(
     editor: User = Depends(get_editor),
 ):
     person = await save_person(data, photo=photo)
-    return PersonIdResponse(id=str(person.id))
+    return PersonIdResponse(id=str(person.id), code=person.code)
 
 
 @router.post(
@@ -196,7 +196,7 @@ async def update_person_endpoint(
     editor: User = Depends(get_editor),
 ):
     person = await save_person(data, person_id=data.id, photo=photo)
-    return PersonIdResponse(id=str(person.id))
+    return PersonIdResponse(id=str(person.id), code=person.code)
 
 
 @router.get(
