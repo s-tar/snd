@@ -1,5 +1,5 @@
 <template>
-  <Field :name="name" :value="value">
+  <Field v-if="value && Object.entries(value).length" :name="name" :value="value">
     <template #value>
       <div>
         <div v-if="value.name">{{ value.name }}</div>
