@@ -531,7 +531,7 @@ export default {
         this.updatedData[name] = newArray
       } else if (values.length === 0) {
         this.$set(this.person, name, [value])
-        this.updatedData[name].push(value)
+        this.updatedData[name] = [value]
       } else {
         this.$set(this.person[name], i, value)
         this.updatedData[name][i] = value

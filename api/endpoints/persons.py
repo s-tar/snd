@@ -55,7 +55,7 @@ async def save_person(data, person_id=None, photo=None):
             raise FieldValidationError("id", "Person not found")
         person = Person(**merge(person.dict(exclude_none=True), update_data))
     else:
-        person = Person(**update_data, code='')
+        person = Person(**merge({}, update_data), code='')
 
     person.code = get_code(person)
     check_code_person = (
@@ -102,6 +102,7 @@ async def save_person(data, person_id=None, photo=None):
                 remove_by_name(upload_folder, "photo", exclude=f"photo.{hex}")
 
     return person
+
 
 @router.post(
     "/add_many",

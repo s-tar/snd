@@ -14,6 +14,19 @@ export default {
       unit: {},
     }
   },
+  head() {
+    const meta = []
+    const description = this.getMetaDescription()
+    meta.push({ hid: 'og-url', property: 'og:url', content: this.$route.path })
+    meta.push({ hid: 'og-description', property: 'og:description', description })
+    meta.push({ hid: 'description', property: 'description', description })
+    if (this.person.photo) {
+      meta.push({
+        hid: 'og-image', property: 'og:image', content: `/public/person/${this.person.id}/${this.person.photo}`,
+      })
+    }
+    return { meta }
+  },
   computed: {
     withSearch() { return true },
     mainTitle() {
@@ -34,19 +47,6 @@ export default {
       }]
     },
   },
-  head() {
-    const meta = []
-    const description = this.getMetaDescription()
-    meta.push({ hid: 'og-url', property: 'og:url', content: this.$route.path })
-    meta.push({ hid: 'og-description', property: 'og:description', description })
-    meta.push({ hid: 'description', property: 'description', description })
-    if (this.person.photo) {
-      meta.push({
-        hid: 'og-image', property: 'og:image', content: `/public/person/${this.person.id}/${this.person.photo}`,
-      })
-    }
-    return { meta }
-  },
   methods: {
     async init() {
       const res = await this.loadPerson()
@@ -58,7 +58,7 @@ export default {
         this.unit = await this.loadMilitaryUnit(this.person.military.unit)
       }
 
-      if (this.unit) {
+      if (this.person.unit) {
         this.person.military.unitData = this.unit
       }
 

@@ -5,7 +5,11 @@ def merge(source, feed):
     for key, value in feed.items():
         if isinstance(value, dict) and key in source:
             merge(source[key], value)
-        elif isinstance(value, list) and key in source:
+        elif isinstance(value, list):
+            if key not in source:
+                source[key] = [v for v in value if v]
+                continue
+
             for i, (s, v) in enumerate(zip_longest(source[key], value)):
                 if v is None:
                     continue

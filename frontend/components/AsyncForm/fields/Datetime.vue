@@ -16,6 +16,7 @@
       v-model="fieldValue"
       :language="dateLocale"
       format="dd.MM.yyyy"
+      typeable
       monday-first
       calendar-button-icon="fa-solid fa-calendar-days"
       v-bind="$attrs"
@@ -69,8 +70,12 @@ export default {
       this.changed = true
       this.error = null
       if (this.$listeners.update) {
-        date = date.toISOString().split('T')[0]
-        this.$listeners.update(this.name, date, null)
+        try {
+          date = date.toISOString().split('T')[0]
+          this.$listeners.update(this.name, date, null)
+        } catch (e) {
+          this.fieldValue = ''
+        }
       }
     },
     onFocus(e) {
