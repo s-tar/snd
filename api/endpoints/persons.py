@@ -123,10 +123,10 @@ async def add_many_person_endpoint(
         if person.military and person.military.unit
     }
     units = {
-        unit.number: unit
+        unit.id: unit
         for unit in await database.find(
             MilitaryUnit,
-            MilitaryUnit.number.in_(list(unit_ids))
+            MilitaryUnit.id.in_(list(unit_ids))
         )
     }
 
