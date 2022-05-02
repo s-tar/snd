@@ -114,7 +114,7 @@
       </div>
       <div v-if="item.person.sources" class="person-card__frame-row">
         <InfoFrame type="table">
-          <Field name="Источник" :value="item.person.sources" />
+          <LinkField name="Источник" :value="item.person.sources" />
         </InfoFrame>
       </div>
     </div>
@@ -125,6 +125,7 @@
 import InfoFrame from './parts/InfoFrame'
 import Field from './parts/Field'
 import AddressField from './parts/AddressField'
+import LinkField from './parts/LinkField'
 import MilitaryUnitField from './parts/MilitaryUnitField'
 import SocialField from './parts/SocialField'
 import RelativeFrame from './parts/RelativeFrame'
@@ -138,6 +139,7 @@ export default {
     InfoFrame,
     Field,
     AddressField,
+    LinkField,
     MilitaryUnitField,
     SocialField,
     RelativeFrame,
