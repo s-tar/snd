@@ -265,12 +265,18 @@
                 <SelectField
                   id="military.rank"
                   name="military.rank"
-                  :value="military.rank"
+                  :value="military.rank || ''"
                   label="Звание"
                   :style="{ minWidth: '200px' }"
                   @update="onUpdate"
                 >
-                  <option v-for="(rank, key) of RANKS" :key="key" :value="key">{{ rank }}</option>
+                  <option value="">{{ RANKS[''] }}</option>
+                  <optgroup label="Сухопутные войска">
+                    <option v-for="i in 20" :key="i" :value="'GF' + i">{{ RANKS['GF' + i] }}</option>
+                  </optgroup>
+                  <optgroup label="Военно-морской флот">
+                    <option v-for="i in 19" :key="i" :value="'N' + i">{{ RANKS['N' + i] }}</option>
+                  </optgroup>
                 </SelectField>
               </div>
               <div class="form__col">

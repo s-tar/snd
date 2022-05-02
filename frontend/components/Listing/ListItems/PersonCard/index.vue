@@ -114,7 +114,7 @@
       </div>
       <div v-if="item.person.sources" class="person-card__frame-row">
         <InfoFrame type="table">
-          <LinkField name="Источник" :value="item.person.sources" />
+          <LinkField name="Источник" :value="item.person.sources" target="_blank" />
         </InfoFrame>
       </div>
     </div>
