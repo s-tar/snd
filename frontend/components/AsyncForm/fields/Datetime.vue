@@ -16,7 +16,6 @@
       v-model="fieldValue"
       :language="dateLocale"
       format="dd.MM.yyyy"
-      typeable
       monday-first
       calendar-button-icon="fa-solid fa-calendar-days"
       v-bind="$attrs"
