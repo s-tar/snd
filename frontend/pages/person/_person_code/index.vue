@@ -69,7 +69,7 @@ export default {
       const res = await this.$axios.$get(
         '/unit/get',
         {
-          params: { id },
+          params: { ids: [id] },
           paramsSerializer: params => require('qs').stringify(params, { arrayFormat: 'repeat' }),
         },
       )
