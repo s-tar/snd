@@ -22,7 +22,7 @@
             <div>Please check and enter code below</div>
           </div>
         </div>
-        <div class="form__row form__row--align-stretch">
+        <div class="form__row">
           <div v-for="(_, index) in numbersCount" :key="index" class="form__col">
             <InputField
               :id="'number'+index"
@@ -36,11 +36,13 @@
             />
           </div>
         </div>
-        <div class="form__row form__row--align-right">
-          <div class="form__text">
-            <InputField name="code" :value="code" type="hidden" />
+        <div class="form__row">
+          <div class="form__col form__col--align-stretch">
+            <div class="form__text">
+              <InputField name="code" :value="code" type="hidden" />
+            </div>
+            <Submit type="submit" class="button button--success" :processing="form.processing">Verify</Submit>
           </div>
-          <Submit type="submit" class="button button--success" :processing="form.processing">Verify</Submit>
         </div>
       </AsyncForm>
     </div>

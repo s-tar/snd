@@ -15,21 +15,31 @@
         :on-success="onSuccess"
         :on-error="onError"
       >
-        <div class="form__row">
-          <InputField id="name" type="text" name="name" label="Name" />
+         <div class="form__row">
+          <div class="form__col">
+            <InputField id="name" type="text" name="name" label="Name" />
+          </div>
         </div>
         <div class="form__row">
-          <InputField id="email" type="email" name="email" label="Email" />
+          <div class="form__col">
+            <InputField id="email" type="email" name="email" label="Email" />
+          </div>
         </div>
         <div class="form__row">
-          <InputField id="password" type="password" name="password" label="Password" />
+          <div class="form__col">
+            <InputField id="password" type="password" name="password" label="Password" />
+          </div>
         </div>
         <div class="form__row">
-          <InputField id="repassword" type="password" name="repassword" label="Confirm Password" />
+          <div class="form__col">
+            <InputField id="repassword" type="password" name="repassword" label="Confirm Password" />
+          </div>
         </div>
         <div class="form__row form__row--valign-center form__row--align-stretch">
-          <a href="/auth/login" class="link">Login</a>
-          <Submit type="submit" class="button button--success" :processing="form.processing">Register</Submit>
+          <div class="form__col form__col--valign-center form__col--align-stretch">
+            <a href="/auth/login" class="link">Login</a>
+            <Submit type="submit" class="button button--success" :processing="form.processing">Register</Submit>
+          </div>
         </div>
       </AsyncForm>
     </div>

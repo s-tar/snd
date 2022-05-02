@@ -29,7 +29,8 @@
             <span v-if="item.person.middle_name">{{ item.person.middle_name }}</span>
           </a>
           <a v-if="canEdit" :href="`/person/${item.person.code}/edit`" class="link person-card__edit-link" @click.stop="">
-            (Редактировать)
+            <span class="person-card__edit-link-caption">(Редактировать)</span>
+            <span class="person-card__edit-link-caption--mobile"><i class="fa-solid fa-pen-to-square"></i></span>
           </a>
         </div>
         <div v-if="item.person.birthday" class="person-card__birthday">{{ getDate(item.person.birthday) }}р.</div>

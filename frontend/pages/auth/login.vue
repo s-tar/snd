@@ -24,8 +24,8 @@
             <InputField id="password" type="password" name="password" label="Password" />
           </div>
         </div>
-        <div class="form__row form__row--valign-center">
-          <div class="form__col form__col--align-stretch">
+        <div class="form__row">
+          <div class="form__col form__col--align-stretch form__col--valign-center">
             <a href="/auth/register" class="link">Register</a>
             <Submit type="submit" class="button button--success" :processing="form.processing">Login</Submit>
           </div>

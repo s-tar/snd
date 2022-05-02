@@ -1,13 +1,6 @@
 <template>
   <div class="page">
-    <header class="header">
-      <div class="header_content container container--separated container--centered">
-        <div class="header__title">
-          <a class="header__logo" href="/">Seek<small>&</small>Destroy</a>
-        </div>
-        <div></div>
-      </div>
-    </header>
+    <Header />
     <div class="container container--centered">
       <main class="main-content">
         <Nuxt />
@@ -19,10 +12,17 @@
 
 <script>
 import Modal from '~/components/Modal'
+import Header from '~/components/Header'
 
 export default {
   components: {
+    Header,
     Modal,
+  },
+  computed: {
+    isAuth() {
+      return !!this.$auth.user
+    },
   },
 }
 </script>

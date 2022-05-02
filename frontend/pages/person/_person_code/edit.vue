@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loading">Loading...</div>
+  <div v-if="loading" class="loading"></div>
   <PersonForm
     v-else-if="!$fetchState.pending"
     :id="person.id"

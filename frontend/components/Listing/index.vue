@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loading">Загрузка...</div>
+  <div v-if="loading" class="loading"></div>
   <div v-else>
     <div class="container container--separated container--v-centred">
       <MainTitle :title="mainTitle" :subtitle="breadcrumbs" />

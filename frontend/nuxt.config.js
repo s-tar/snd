@@ -9,11 +9,11 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { property: "og:title", content: "Seek & Destroy" },
-      { property: "og:description", content: "Список военных преступников участвующих в войне в Украине" },
-      { property: "og:image", content: process.env.BASE_URL + "/ogicon_b.png" },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: process.env.BASE_URL }
+      { hid: 'og-title', property: "og:title", content: "Seek & Destroy" },
+      { hid: 'og-description', property: "og:description", content: "Список военных преступников участвующих в войне в Украине" },
+      { hid: 'og-image', property: "og:image", content: process.env.BASE_URL + "/ogicon_b.png" },
+      { hid: 'og-type', property: "og:type", content: "website" },
+      { hid: 'og-url', property: "og:url", content: process.env.BASE_URL }
     ],
     __dangerouslyDisableSanitizers: ['script', 'innerHTML'],
     script: [
