@@ -55,13 +55,8 @@ export default {
       }
       this.person = res.person
       if (this.person.military && this.person.military.unit) {
-        this.unit = await this.loadMilitaryUnit(this.person.military.unit)
+        this.person.military.unitData = await this.loadMilitaryUnit(this.person.military.unit)
       }
-
-      if (this.person.unit) {
-        this.person.military.unitData = this.unit
-      }
-
       this.person.showFullInfo = true
       this.loading = false
     },
