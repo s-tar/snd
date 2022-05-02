@@ -7,11 +7,18 @@
         <nuxt-link v-for="(button, index) in mainButtons" :key="index" :to="button.url" :class="button.class">{{ button.name }}</nuxt-link>
       </div>
     </div>
-    <div v-if="onSearch" class="card search-wrapper">
-      <div class="card__body">
-        <Search :phrase="$nuxt.$route.query['s']" placeholder="Поиск" :on-search="onSearch" />
+    <div class="container container--separated container--v-centred">
+      <a v-if="canAdd" href="/person/add" class="button button--success button--add-person">
+        <i class="fa-solid fa-user-plus"></i>
+        <span class="button__text button__text--desktop">Добавить</span>
+      </a>
+      <div v-if="onSearch" class="card search-wrapper">
+        <div class="card__body">
+          <Search :phrase="$nuxt.$route.query['s']" placeholder="Поиск" :on-search="onSearch" />
+        </div>
       </div>
     </div>
+
     <div v-if="Object.keys(filters).length > 0" class="card">
       <AsyncForm
         ref="form"
@@ -82,6 +89,9 @@ export default {
     }
   },
   computed: {
+    canAdd() {
+      return this.$auth.user && this.$auth.user.role > 1
+    },
     visiblePages() {
       return this.screenWidth > 500 ? 5 : 2
     },
