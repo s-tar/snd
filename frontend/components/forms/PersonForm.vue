@@ -151,26 +151,24 @@
             </div>
             <div class="form__row">
               <div class="form__col">
-                <InputField
+                <NumberField
                   id="identification_number"
                   type="text"
                   name="identification_number"
                   label="ИНН"
                   :value="person.identification_number"
-                  @keydown="isNumber"
                   @update="onUpdate"
                 />
               </div>
             </div>
             <div class="form__row">
               <div class="form__col">
-                <InputField
+                <NumberField
                   id="insurance_number"
                   type="text"
                   name="insurance_number"
                   label="СНИЛС"
                   :value="person.insurance_number"
-                  @keydown="isNumber"
                   @update="onUpdate"
                 />
               </div>
@@ -191,7 +189,7 @@
             </div>
             <div class="form__row">
               <div v-for="(phone, i) in phones" :key="i" class="form__col form__col--compact">
-                <InputField
+                <NumberField
                   :id="'phones.'+i"
                   type="text"
                   :name="'phones.'+i"
@@ -199,7 +197,6 @@
                   :value="phone"
                   :keep-changed="false"
                   @input="e => onMultipleChange(i, 'phones', e.target.value)"
-                  @keydown="isNumber"
                 />
               </div>
             </div>
@@ -401,6 +398,7 @@ import { updateByPath } from '~/utils/object'
 
 import AsyncForm from '~/components/AsyncForm'
 import InputField from '~/components/AsyncForm/fields/Input'
+import NumberField from '~/components/AsyncForm/fields/Number'
 import Submit from '~/components/AsyncForm/fields/Submit'
 import PhotoField from '~/components/AsyncForm/fields/PhotoField'
 import SelectField from '~/components/AsyncForm/fields/Select'
@@ -415,6 +413,7 @@ export default {
     PhotoField,
     AsyncForm,
     InputField,
+    NumberField,
     Submit,
     SelectField,
     DatetimeField,
@@ -516,12 +515,6 @@ export default {
         return items
       }
       return {}
-    },
-    isNumber(e) {
-      if (!['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'Backspace', 'Delete'].includes(e.key)) {
-        e.preventDefault()
-        return false
-      }
     },
     onMultipleChange(i, name, value) {
       const values = this.person[name] ? this.person[name] : []

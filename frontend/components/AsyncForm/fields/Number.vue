@@ -10,19 +10,15 @@
     >
       {{ label }}
     </label>
-    <datepicker
+    <input
       :id="id"
       ref="field"
       v-model="fieldValue"
-      :language="dateLocale"
-      format="dd.MM.yyyy"
-      wrapper-class="form__field--calendar"
-      clear-button
-      monday-first
-      clear-button-icon="fa fa-times"
       v-bind="$attrs"
+      :name="name"
       :disabled="readonly"
-      :input-class="{
+      :type="type"
+      :class="{
         'form__field': true,
         'form__field--has-value': !!fieldValue,
         'form__field--focused': isFocused,
@@ -31,7 +27,8 @@
         ...fieldClass,
       }"
       v-on="$listeners"
-      @selected="onSelect"
+      @input="filterNumbers"
+      @change="onChange"
       @focus="onFocus"
       @blur="onBlur"
     />
@@ -40,19 +37,17 @@
 </template>
 
 <script>
-import { ru } from 'vuejs-datepicker/dist/locale'
-
 import Field from './Field.vue'
 import FieldError from './FieldError.vue'
 
 export default {
+  name: 'InputField',
   components: {
     'field-error': FieldError,
   },
   extends: Field,
   data() {
     return {
-      dateLocale: ru,
       changed: false,
       isFocused: false,
       fieldValue: this.value,
@@ -61,22 +56,20 @@ export default {
   },
   watch: {
     value(value) {
-      if (!this.changed) {
+      if (!this.keepChanged || !this.changed) {
         this.fieldValue = value
       }
     },
   },
   methods: {
-    onSelect(date) {
+    filterNumbers(e) {
+      this.fieldValue = this.fieldValue.replace(/\D/g, '')
+    },
+    onChange(e) {
       this.changed = true
       this.error = null
       if (this.$listeners.update) {
-        try {
-          date = date.toISOString().split('T')[0]
-          this.$listeners.update(this.name, date, null)
-        } catch (e) {
-          this.fieldValue = ''
-        }
+        this.$listeners.update(this.name, this.fieldValue, null)
       }
     },
     onFocus(e) {
