@@ -33,7 +33,7 @@ async def get_person_or_fail(
 def get_score(person):
     score = 0
     if person.status == PersonStatus.SND:
-        score += 100
+        score += 1000
 
     if person.photo:
         score += 20
