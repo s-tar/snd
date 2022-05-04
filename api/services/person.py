@@ -36,7 +36,10 @@ def get_score(person):
         score += 100
 
     if person.photo:
-        score += 10
+        score += 20
+
+    if person.birthday:
+        score += 5
 
     if person.phones:
         score += 5 * len(person.phones)
