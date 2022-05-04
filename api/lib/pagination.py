@@ -4,7 +4,7 @@ from math import ceil
 from base.database import database
 
 MAX_PER_PAGE = 50
-Page = namedtuple("Page", ["items", "page", "per_page", "max_page"])
+Page = namedtuple("Page", ["items", "page", "per_page", "max_page", "total"])
 
 
 async def paginate(
@@ -30,4 +30,5 @@ async def paginate(
         page=page,
         per_page=per_page,
         max_page=ceil(total / per_page),
+        total=total,
     )

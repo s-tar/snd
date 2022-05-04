@@ -9,3 +9,4 @@ class Pagination(BaseModel):
     page: int
     per_page: int
     max_page: int
+    total: int

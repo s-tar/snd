@@ -18,7 +18,6 @@
         </div>
       </div>
     </div>
-
     <div v-if="Object.keys(filters).length > 0" class="card">
       <AsyncForm
         ref="form"
@@ -40,6 +39,7 @@
         </div>
       </AsyncForm>
     </div>
+    <div v-if="total > 0" class="search-general-info">Найдено: {{ total }}</div>
     <component
       :is="itemsListComponent"
       v-for="(item, i) in visibleItems"
@@ -112,6 +112,9 @@ export default {
     },
     items() {
       return []
+    },
+    total() {
+      return 0
     },
     page() {
       const page = parseInt(this.$route.query.page)

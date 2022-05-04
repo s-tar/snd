@@ -234,6 +234,7 @@ async def all_persons_endpoint(
         page=persons_page.page,
         per_page=persons_page.per_page,
         max_page=persons_page.max_page,
+        total=persons_page.total,
         items=[
             PersonPublicData(**item.dict())
             for item in persons_page.items
@@ -247,7 +248,7 @@ async def all_persons_endpoint(
     response_model=PersonResponse,
     summary="Get person by code"
 )
-async def all_persons_endpoint(person_code: str):
+async def get_person_by_code_endpoint(person_code: str):
     person = await database.find_one(Person, {"code": person_code})
     if not person:
         raise FieldValidationError("code", "Person not found")
@@ -256,6 +257,7 @@ async def all_persons_endpoint(person_code: str):
         status=Status.OK,
         person=PersonPublicData(**person.dict()),
     )
+
 
 @router.post(
     "/rescore",

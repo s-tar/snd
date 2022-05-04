@@ -100,6 +100,7 @@ async def get_military_units_by_number_endpoint(
         page=page.page,
         per_page=page.per_page,
         max_page=page.max_page,
+        total=page.total,
         items=[
             MilitaryUnitResponse(**item.dict())
             for item in page.items
@@ -135,6 +136,7 @@ async def search_military_units_endpoint(
         page=page.page,
         per_page=page.per_page,
         max_page=page.max_page,
+        total=page.total,
         items=[
             MilitaryUnitResponse(**item.dict())
             for item in page.items
