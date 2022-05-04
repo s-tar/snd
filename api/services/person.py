@@ -36,7 +36,7 @@ def get_score(person):
         score += 1000
 
     if person.photo:
-        score += 20
+        score += 50
 
     if person.birthday:
         score += 5
