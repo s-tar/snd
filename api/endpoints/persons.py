@@ -27,8 +27,11 @@ from schemas.person import PersonListResponse
 from schemas.person import PersonPublicData
 from schemas.person import PersonResponse
 from schemas.person import UpdatePersonRequest
+from schemas.response import ResponseModel
 from schemas.response import Status
 from services.person import create_person_code
+from services.person import get_score
+from services.user import get_admin
 from services.user import get_editor
 
 router = APIRouter()
@@ -58,6 +61,7 @@ async def save_person(data, person_id=None, photo=None):
         person = Person(**merge({}, update_data), code='')
 
     person.code = get_code(person)
+    person.score = get_score(person)
     check_code_person = (
         await database.find_one(Person, Person.code == person.code)
     )
@@ -142,6 +146,7 @@ async def add_many_person_endpoint(
             **person_data.dict(exclude_unset=True),
             code=get_code(person_data)
         )
+        person.score = get_score(person)
         persons.append(person)
         person_codes.append(person.code)
 
@@ -221,7 +226,7 @@ async def all_persons_endpoint(
         query=query,
         page=page,
         per_page=per_page,
-        sort=Person.id.desc(),
+        sort=(Person.score.desc(), Person.id.desc())
     )
 
     return PersonListResponse(
@@ -250,4 +255,36 @@ async def all_persons_endpoint(person_code: str):
     return PersonResponse(
         status=Status.OK,
         person=PersonPublicData(**person.dict()),
+    )
+
+@router.post(
+    "/rescore",
+    status_code=status.HTTP_200_OK,
+    response_model=ResponseModel,
+    responses={
+        status.HTTP_403_FORBIDDEN: {"description": "Operation forbidden"},
+    },
+    summary="Recalculate person scores"
+)
+async def rescore_persons_endpoint(
+    admin: User = Depends(get_admin),
+):
+    last_id = None
+    while True:
+        query = {}
+        if last_id:
+            query = Person.id > last_id
+
+        persons = await database.find(Person, query, limit=50)
+        if not persons:
+            break
+
+        for person in persons:
+            person.score = get_score(person)
+
+        await database.save_all(persons)
+        last_id = persons[-1].id
+
+    return ResponseModel(
+        status=Status.OK
     )

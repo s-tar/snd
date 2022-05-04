@@ -10,6 +10,7 @@
         <div v-if="item.person.status > 1" class="person-card__photo-badge">
           <i v-if="item.person.status === 2" class="fa-solid fa-skull-crossbones" title="Умер"></i>
           <i v-else-if="item.person.status === 3" class="fa-solid fa-handcuffs" title="В плену"></i>
+          <img v-else-if="item.person.status === 5" src="/target.svg" alt="" title="Найти и уничтожить" style="width: 1em; height: 1em" />
         </div>
         <img v-if="item.person.photo" :src="getPhoto(item.person)" class="person-card__photo-image" alt="" @click.stop="onPhotoClick(item.person)" />
         <div v-else>

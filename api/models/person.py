@@ -81,5 +81,7 @@ class Person(Model):
 
     sources: Optional[List[str]]
 
+    score: Optional[int]
+
     created_at: datetime.datetime = Field(default_factory=datetime.datetime.now)
     deleted_at: Optional[datetime.datetime]

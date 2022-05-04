@@ -2,6 +2,7 @@ from bson import ObjectId
 from transliterate import translit
 
 from base.database import database
+from constants.person import PersonStatus
 from lib.exceptions import FieldValidationError
 from models.person import Person
 
@@ -27,3 +28,35 @@ async def get_person_or_fail(
         raise FieldValidationError("_id", f"Person not found")
 
     return person
+
+
+def get_score(person):
+    score = 0
+    if person.status == PersonStatus.SND:
+        score += 100
+
+    if person.photo:
+        score += 10
+
+    if person.phones:
+        score += 5 * len(person.phones)
+
+    if person.addresses:
+        score += 5 * len(person.addresses)
+
+    if person.passport:
+        score += 3
+
+    if person.relatives:
+        score += len(person.relatives)
+        for rel in person.relatives:
+            if rel.photo:
+                score += 5
+
+            if rel.phones:
+                score += 3 * len(rel.phones)
+
+            if rel.address:
+                score += 3
+
+    return score

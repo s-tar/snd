@@ -81,6 +81,15 @@ async def get_current_user(
         raise CREDENTIALS_EXCEPTION
 
 
+async def get_admin(
+    user: User = Depends(get_current_user)
+):
+    if user.role == Roles.ADMIN:
+        return user
+
+    raise PERMISSIONS_EXCEPTION
+
+
 async def get_editor(
     user: User = Depends(get_current_user)
 ):

@@ -12,6 +12,7 @@ class PersonStatus(IntEnum):
     DEAD = 2
     POW = 3
     PRISONED = 4
+    SND = 5
 
 
 class Relationship(IntEnum):
