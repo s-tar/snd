@@ -1,3 +1,3 @@
-# S'n'M
+# S'n'D
 
 Seek & Destroy
