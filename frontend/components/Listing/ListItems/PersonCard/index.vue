@@ -8,9 +8,9 @@
     <div :class="{ 'person-card__header': true, 'person-card__header--clickable': !item.isPersonPage }" @click="item.click">
       <div class="person-card__photo">
         <div v-if="item.person.status > 1" class="person-card__photo-badge">
-          <i v-if="item.person.status === 2" class="fa-solid fa-skull-crossbones" title="Умер"></i>
-          <i v-else-if="item.person.status === 3" class="fa-solid fa-handcuffs" title="В плену"></i>
-          <img v-else-if="item.person.status === 5" src="/target.svg" alt="" title="Найти и уничтожить" style="width: 1em; height: 1em" />
+          <i v-if="item.person.status === 2" class="fa-solid fa-skull-crossbones" title="Помер"></i>
+          <i v-else-if="item.person.status === 3" class="fa-solid fa-handcuffs" title="У полоні"></i>
+          <img v-else-if="item.person.status === 5" src="/target.svg" alt="" title="Знайти та знищити" style="width: 1em; height: 1em" />
         </div>
         <img v-if="item.person.photo" :src="getPhoto(item.person)" class="person-card__photo-image" alt="" @click.stop="onPhotoClick(item.person)" />
         <div v-else>
@@ -30,7 +30,7 @@
             <span v-if="item.person.middle_name">{{ item.person.middle_name }}</span>
           </a>
           <a v-if="canEdit" :href="`/person/${item.person.code}/edit`" class="link person-card__edit-link" @click.stop="">
-            <span class="person-card__edit-link-caption">(Редактировать)</span>
+            <span class="person-card__edit-link-caption">(Редагувати)</span>
             <span class="person-card__edit-link-caption--mobile"><i class="fa-solid fa-pen-to-square"></i></span>
           </a>
         </div>
@@ -66,22 +66,22 @@
       <div class="person-card__frame-row">
         <div v-if="item.person.military" class="person-card__frame-col">
           <InfoFrame title="Служба" type="table">
-            <Field name="Личный номер" :value="item.person.military.number" />
-            <Field name="Звание" :value="getRank(item.person.military.rank)" />
-            <Field name="Должность" :value="item.person.military.post" />
-            <MilitaryUnitField name="Воинская часть" :value="item.person.military.unitData || {}" />
-            <Field name="Военный билет" :value="Object.values(getDoc(item.person.military.ticket))" />
+            <Field name="Особистий номер" :value="item.person.military.number" />
+            <Field name="Звання" :value="getRank(item.person.military.rank)" />
+            <Field name="Посада" :value="item.person.military.post" />
+            <MilitaryUnitField name="Військова частина" :value="item.person.military.unitData || {}" />
+            <Field name="Військовий квиток" :value="Object.values(getDoc(item.person.military.ticket))" />
           </InfoFrame>
         </div>
         <div v-if="Object.keys(personal).length > 0" class="person-card__frame-col">
-          <InfoFrame title="Личные данные" type="table">
-            <Field name="День рождения" :value="getDate(personal.birthday)" />
-            <Field name="Место рождения" :value="personal.city_of_birth" />
+          <InfoFrame title="Особисті дані" type="table">
+            <Field name="День народження" :value="getDate(personal.birthday)" />
+            <Field name="Місце народження" :value="personal.city_of_birth" />
             <Field name="Паспорт" :value="Object.values(getDoc(personal.passport))" />
-            <Field name="ИНН" :value="personal.identification_number" />
-            <Field name="СНИЛС" :value="personal.insurance_number" />
+            <Field name="ІПН" :value="personal.identification_number" />
+            <Field name="СНІЛС" :value="personal.insurance_number" />
             <Field name="Телефон" :value="personal.phones" />
-            <AddressField name="Адрес" :value="personal.addresses" />
+            <AddressField name="Адреса" :value="personal.addresses" />
           </InfoFrame>
           <InfoFrame v-if="personal.social">
             <SocialField v-for="(link, name) in personal.social" :key="name" :name="name" :value="link" />
@@ -90,7 +90,7 @@
       </div>
       <div v-if="item.person.extra" class="person-card__frame-row">
         <div class="person-card__frame-col">
-          <InfoFrame title="Дополнительная информация">
+          <InfoFrame title="Додаткова інформація">
             <div class="person-card__extra">
               <div v-for="(line, i) in item.person.extra.split('\n')" :key="i">{{ line || '&nbsp;' }}</div>
             </div>
@@ -99,7 +99,7 @@
       </div>
       <div v-if="item.person.relatives" class="person-card__frame-row">
         <div class="person-card__frame-col">
-          <InfoFrame type="table" title="Родственики">
+          <InfoFrame type="table" title="Родичі">
             <RelativeFrame
               v-for="(relative, i) in item.person.relatives"
               :key="i"
@@ -115,7 +115,7 @@
       </div>
       <div v-if="item.person.sources" class="person-card__frame-row">
         <InfoFrame type="table">
-          <LinkField name="Источник" :value="item.person.sources" target="_blank" />
+          <LinkField name="Джерело" :value="item.person.sources" target="_blank" />
         </InfoFrame>
       </div>
     </div>

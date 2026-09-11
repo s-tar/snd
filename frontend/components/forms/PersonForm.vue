@@ -33,7 +33,7 @@
                   id="last_name"
                   type="text"
                   name="last_name"
-                  label="Фамилия"
+                  label="Прізвище"
                   :value="person.last_name"
                   @update="onUpdate"
                 />
@@ -43,7 +43,7 @@
                   id="first_name"
                   type="text"
                   name="first_name"
-                  label="Имя"
+                  label="Ім'я"
                   :value="person.first_name"
                   @update="onUpdate"
                 />
@@ -53,7 +53,7 @@
                   id="middle_name"
                   type="text"
                   name="middle_name"
-                  label="Отчество"
+                  label="По батькові"
                   :value="person.middle_name"
                   @update="onUpdate"
                 />
@@ -75,7 +75,7 @@
                 <SelectField
                   id="country"
                   name="country"
-                  label="Страна"
+                  label="Країна"
                   :value="person.country || 'RU'"
                   @update="onUpdate"
                 >
@@ -91,7 +91,7 @@
           </div>
         </div>
         <div class="info-frame">
-          <div class="info-frame__title">Личная информация</div>
+          <div class="info-frame__title">Особиста інформація</div>
           <div class="info-frame__body">
             <div class="form__row">
               <div class="form__col form__col--compact">
@@ -99,7 +99,7 @@
                   id="birthday"
                   type="date"
                   name="birthday"
-                  label="День рождения"
+                  label="День народження"
                   :value="person.birthday"
                   @update="onUpdate"
                 />
@@ -109,7 +109,7 @@
                   id="city_of_birth"
                   type="text"
                   name="city_of_birth"
-                  label="Место рождения"
+                  label="Місце народження"
                   :value="person.city_of_birth"
                   @update="onUpdate"
                 />
@@ -132,7 +132,7 @@
                   id="passport.date"
                   type="date"
                   name="passport.date"
-                  label="Дата выдачи"
+                  label="Дата видачі"
                   :value="passport.date"
                   :style="{ minWidth: '100px' }"
                   @update="onUpdate"
@@ -143,7 +143,7 @@
                   id="passport.authority"
                   type="text"
                   name="passport.authority"
-                  label="Кем выдан"
+                  label="Ким виданий"
                   :value="passport.authority"
                   @update="onUpdate"
                 />
@@ -155,7 +155,7 @@
                   id="identification_number"
                   type="text"
                   name="identification_number"
-                  label="ИНН"
+                  label="ІПН"
                   :value="person.identification_number"
                   @update="onUpdate"
                 />
@@ -167,7 +167,7 @@
                   id="insurance_number"
                   type="text"
                   name="insurance_number"
-                  label="СНИЛС"
+                  label="СНІЛС"
                   :value="person.insurance_number"
                   @update="onUpdate"
                 />
@@ -179,7 +179,7 @@
                   :id="'addresses.'+i"
                   type="text"
                   :name="'addresses.'+i"
-                  :label="i === 0 ? 'Адрес' : 'Доп. адрес'"
+                  :label="i === 0 ? 'Адреса' : 'Дод. адреса'"
                   :value="address"
                   :keep-changed="false"
                   @input="e => onMultipleChange(i, 'addresses', e.target.value)"
@@ -193,7 +193,7 @@
                   :id="'phones.'+i"
                   type="text"
                   :name="'phones.'+i"
-                  :label="i === 0 ? 'Телефон' : 'Доп. телефон'"
+                  :label="i === 0 ? 'Телефон' : 'Дод. телефон'"
                   :value="phone"
                   :keep-changed="false"
                   @input="e => onMultipleChange(i, 'phones', e.target.value)"
@@ -203,7 +203,7 @@
           </div>
         </div>
         <div class="info-frame">
-          <div class="info-frame__title">Социальные сети</div>
+          <div class="info-frame__title">Соціальні мережі</div>
           <div class="info-frame__body">
             <div class="form__row">
               <div class="form__col">
@@ -252,7 +252,7 @@
                   id="military.number"
                   type="text"
                   name="military.number"
-                  label="Личный номер"
+                  label="Особистий номер"
                   :value="military.number"
                   :style="{ minWidth: '120px' }"
                   @update="onUpdate"
@@ -263,15 +263,15 @@
                   id="military.rank"
                   name="military.rank"
                   :value="military.rank || ''"
-                  label="Звание"
+                  label="Звання"
                   :style="{ minWidth: '200px' }"
                   @update="onUpdate"
                 >
                   <option value="">{{ RANKS[''] }}</option>
-                  <optgroup label="Сухопутные войска">
+                  <optgroup label="Сухопутні війська">
                     <option v-for="i in 20" :key="i" :value="'GF' + i">{{ RANKS['GF' + i] }}</option>
                   </optgroup>
-                  <optgroup label="Военно-морской флот">
+                  <optgroup label="Військово-морський флот">
                     <option v-for="i in 19" :key="i" :value="'N' + i">{{ RANKS['N' + i] }}</option>
                   </optgroup>
                 </SelectField>
@@ -281,7 +281,7 @@
                   id="military.post"
                   type="text"
                   name="military.post"
-                  label="Должность"
+                  label="Посада"
                   :value="military.post"
                   @update="onUpdate"
                 />
@@ -293,7 +293,7 @@
                   id="military.ticket.number"
                   type="text"
                   name="military.ticket.number"
-                  label="Номер военного билета"
+                  label="Номер військового квитка"
                   :value="militaryTicket.number"
                   :style="{ minWidth: '180px' }"
                   @update="onUpdate"
@@ -304,7 +304,7 @@
                   id="military.ticket.date"
                   type="date"
                   name="military.ticket.date"
-                  label="Дата выдачи"
+                  label="Дата видачі"
                   :value="militaryTicket.date"
                   :style="{ minWidth: '100px' }"
                   @update="onUpdate"
@@ -315,7 +315,7 @@
                   id="military.ticket.authority"
                   type="text"
                   name="military.ticket.authority"
-                  label="Кем выдан"
+                  label="Ким виданий"
                   :value="militaryTicket.authority"
                   @update="onUpdate"
                 />
@@ -326,7 +326,7 @@
                 <AutocompleteField
                   id="military.unit"
                   name="military.unit"
-                  label="Воинская часть"
+                  label="Військова частина"
                   :items="getUnits"
                   :value="military.unit ? military.unit.id : null"
                   :term="militaryUnitName"
@@ -337,7 +337,7 @@
           </div>
         </div>
         <div class="info-frame">
-          <div class="info-frame__title">Дополнительная информация</div>
+          <div class="info-frame__title">Додаткова інформація</div>
           <div class="info-frame__body">
             <div class="form__row">
               <div class="form__col">
@@ -355,7 +355,7 @@
                   :id="'sources.'+i"
                   type="text"
                   :name="'sources.'+i"
-                  :label="i === 0 ? 'Источник' : 'Доп. Источник'"
+                  :label="i === 0 ? 'Джерело' : 'Дод. джерело'"
                   :value="source"
                   :keep-changed="false"
                   @input="e => onMultipleChange(i, 'sources', e.target.value)"
@@ -368,7 +368,7 @@
                   :id="'tags.'+i"
                   type="text"
                   :name="'tags.'+i"
-                  label="Тэг"
+                  label="Тег"
                   :value="tag"
                   :keep-changed="false"
                   @input="e => onMultipleChange(i, 'tags', e.target.value)"
@@ -379,8 +379,8 @@
         </div>
         <div class="form__row">
           <div class="form__col form__col--align-right">
-            <nuxt-link :to="`/`" class="button button--danger">Отмена</nuxt-link>
-            <Submit type="submit" class="button button--success" :processing="form.processing">{{ id ? 'Сохранить' : 'Добавить' }}</Submit>
+            <nuxt-link :to="`/`" class="button button--danger">Скасувати</nuxt-link>
+            <Submit type="submit" class="button button--success" :processing="form.processing">{{ id ? 'Зберегти' : 'Додати' }}</Submit>
           </div>
         </div>
       </AsyncForm>

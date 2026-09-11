@@ -10,7 +10,7 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
       { hid: 'og-title', property: "og:title", content: "Seek & Destroy" },
-      { hid: 'og-description', property: "og:description", content: "Список военных преступников участвующих в войне в Украине" },
+      { hid: 'og-description', property: "og:description", content: "Список воєнних злочинців, які беруть участь у війні проти України" },
       { hid: 'og-image', property: "og:image", content: process.env.BASE_URL + "/ogicon_b.png" },
       { hid: 'og-type', property: "og:type", content: "website" },
       { hid: 'og-url', property: "og:url", content: process.env.BASE_URL }

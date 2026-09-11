@@ -10,11 +10,11 @@
     <div class="container container--separated container--v-centred">
       <a v-if="canAdd" href="/person/add" class="button button--success button--add-person">
         <i class="fa-solid fa-user-plus"></i>
-        <span class="button__text button__text--desktop">Добавить</span>
+        <span class="button__text button__text--desktop">Додати</span>
       </a>
       <div v-if="onSearch" class="card search-wrapper">
         <div class="card__body">
-          <Search :phrase="$nuxt.$route.query['s']" placeholder="Поиск" :on-search="onSearch" />
+          <Search :phrase="$nuxt.$route.query['s']" placeholder="Пошук" :on-search="onSearch" />
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
         </div>
       </AsyncForm>
     </div>
-    <div v-if="total > 0" class="search-general-info">Найдено: {{ total }}</div>
+    <div v-if="total > 0" class="search-general-info">Знайдено: {{ total }}</div>
     <component
       :is="itemsListComponent"
       v-for="(item, i) in visibleItems"
@@ -47,7 +47,7 @@
       :item="item"
     />
     <div v-if="visibleItems.length == 0">
-      Ничего не найдено.
+      Нічого не знайдено.
     </div>
     <div class="container container--centred">
       <Pagination :page="page" :max-page="maxPage" :visible-pages="visiblePages" @change="pageChange" />

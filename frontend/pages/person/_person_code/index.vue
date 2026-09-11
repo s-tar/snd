@@ -51,7 +51,7 @@ export default {
     async init() {
       const res = await this.loadPerson()
       if (res.status !== RESPONSE_STATUS.OK || !res.person) {
-        return this.$nuxt.error({ statusCode: 404, message: 'Страница не найдена' })
+        return this.$nuxt.error({ statusCode: 404, message: 'Сторінку не знайдено' })
       }
       this.person = res.person
       if (this.person.military && this.person.military.unit) {

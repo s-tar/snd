@@ -29,83 +29,14 @@ from schemas.person import PersonResponse
 from schemas.person import UpdatePersonRequest
 from schemas.response import ResponseModel
 from schemas.response import Status
-from services.person import create_person_code
+from services.person import get_person_code
+from services.person import save_person
+from services.person import save_person
 from services.person import get_score
 from services.user import get_admin
 from services.user import get_editor
 
 router = APIRouter()
-
-
-def get_code(person):
-    return create_person_code(
-        first_name=person.first_name,
-        middle_name=person.middle_name,
-        last_name=person.last_name,
-        birthday=person.birthday,
-    )
-
-
-async def save_person(data, person_id=None, photo=None):
-    setting = get_settings()
-    update_data = data.dict(exclude_unset=True)
-    if "photo" in update_data:
-        del update_data["photo"]
-
-    if person_id:
-        person = await database.find_one(Person, Person.id == person_id)
-        if not person:
-            raise FieldValidationError("id", "Person not found")
-        person = Person(**merge(person.dict(exclude_none=True), update_data))
-    else:
-        person = Person(**merge({}, update_data), code='')
-
-    person.code = get_code(person)
-    person.score = get_score(person)
-    check_code_person = (
-        await database.find_one(Person, Person.code == person.code)
-    )
-
-    if check_code_person and check_code_person.id != person.id:
-        return None, ("first_name", f"Person already exist")
-
-    await database.save(person)
-
-    if photo and data.photo:
-        upload_folder = f"{setting.file_upload_folder}/person/{str(person.id)}"
-        previous_photo = None
-        if person.photo:
-            name, hex, _ = person.photo.rsplit(".", 2)
-            previous_photo = f"{name}.{hex}"
-
-        hex = uuid4().hex
-        await save_image(
-            file=photo,
-            name=f"photo.{hex}",
-            upload_folder=upload_folder,
-            size=(1024, 1024),
-            fill=FILL.CONTAINS,
-        )
-        thumbnail_name = await save_image(
-            file=photo,
-            name=f"photo.{hex}.100x100",
-            upload_folder=upload_folder,
-            size=(100, 100),
-            crop=(
-                data.photo.left,
-                data.photo.top,
-                data.photo.left + data.photo.width,
-                data.photo.top + data.photo.height,
-            ),
-            fill=FILL.COVER,
-        )
-        if thumbnail_name:
-            person.photo = thumbnail_name
-            await database.save(person)
-            if previous_photo:
-                remove_by_name(upload_folder, "photo", exclude=f"photo.{hex}")
-
-    return person
 
 
 @router.post(
@@ -144,7 +75,7 @@ async def add_many_person_endpoint(
 
         person = Person(
             **person_data.dict(exclude_unset=True),
-            code=get_code(person_data)
+            code=get_person_code(person_data)
         )
         person.score = get_score(person)
         persons.append(person)

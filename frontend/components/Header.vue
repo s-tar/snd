@@ -6,13 +6,13 @@
           <a class="header__logo header__logo--mobile" href="/">S&D</a>
         </div>
         <div class="header__menu">
-          <div><a href="/" class="link">Главная</a></div>
+          <div><a href="/" class="link">Головна</a></div>
           <div>
             <div v-if="isAuth" class="header__profile">
               <div>{{ $auth.user.name }}</div>
-              <a href="/auth/logout" class="link">Выход</a>
+              <a href="/auth/logout" class="link">Вихід</a>
             </div>
-            <a v-else href="/auth/login" class="link">Вход</a>
+            <a v-else href="/auth/login" class="link">Вхід</a>
           </div>
         </div>
       </div>

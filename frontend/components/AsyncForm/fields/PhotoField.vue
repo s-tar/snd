@@ -31,8 +31,8 @@
           @change="onCrop"
         />
         <div class="form__field-photo-buttons">
-          <button class="button button--danger" @click.prevent="onCropCancel">Отмена</button>
-          <button class="button button--success" @click.prevent="onCropApply">Применить</button>
+          <button class="button button--danger" @click.prevent="onCropCancel">Скасувати</button>
+          <button class="button button--success" @click.prevent="onCropApply">Застосувати</button>
         </div>
       </div>
     </div>
@@ -85,7 +85,7 @@ export default {
       this.error = null
       this.file = e.target.files[0]
       if (!this.isImage(this.file)) {
-        this.error = 'Файл не является картинкой'
+        this.error = 'Файл не є зображенням'
         return
       }
       const reader = new FileReader()

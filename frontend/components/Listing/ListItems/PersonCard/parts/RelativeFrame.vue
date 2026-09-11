@@ -9,9 +9,9 @@
       <div class="person-card__relative-frame-name">{{ name }}</div>
       <InfoFrame>
         <Field name="" :value="relationship" />
-        <Field name="Дата рождения" :value="birthday" />
+        <Field name="Дата народження" :value="birthday" />
         <Field name="Телефон" :value="phonesString" />
-        <AddressField name="Адрес" :value="address" />
+        <AddressField name="Адреса" :value="address" />
         <div v-if="social">
           <SocialField v-for="(link, snName) in social" :key="snName" :name="snName" :value="link" />
         </div>
