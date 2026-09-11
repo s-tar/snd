@@ -18,6 +18,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./api:/opt/project/api
+      - ./migrations:/opt/project/migrations
     expose:
       - 5000
     env_file:
@@ -47,8 +48,8 @@ services:
     image: nginx:1.15-alpine
     container_name: nginx
     ports:
-      - "80:80"
-      - "443:443"
+      - "8080:80"
+      - "8443:443"
     depends_on:
       - api
       - frontend
@@ -58,10 +59,10 @@ services:
 
   mailserver:
     container_name: mailserver
-    image: oanhnn/mailcatcher
+    image: axllent/mailpit
     ports:
       - 1025:1025
-      - 1080:1080
+      - 1080:8025
 
 volumes:
   db-data:
